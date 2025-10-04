@@ -1,0 +1,8 @@
+build:
+  docker:
+    web: Dockerfile
+  config:
+    VITE_SUPABASE_URL: https://ljkipbnumyffxslkwgsv.supabase.co
+    VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxqa2lwYm51bXlmZnhzbGt3Z3N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1Mjc1NDQsImV4cCI6MjA3NTEwMzU0NH0.y9U2W3I2W6FR8_dzy42SuSmit1SSc8p9j4JIPFFq4k0
+run:
+  web: /start.sh
