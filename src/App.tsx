@@ -5,6 +5,10 @@ import { RegisterPage } from "./features/security/pages/RegisterPage";
 import { ProfilePage } from "./features/security/pages/ProfilePage";
 import { AuthCallbackPage } from "./features/security/pages/AuthCallbackPage";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
+import { ExpertRoute } from "./shared/components/ExpertRoute";
+import { TutorialsListPage } from "./features/tutorials/pages/TutorialsListPage";
+import { TutorialDetailPage } from "./features/tutorials/pages/TutorialDetailPage";
+import { CreateTutorialPage } from "./features/tutorials/pages/CreateTutorialPage";
 
 export default function App() {
   return (
@@ -14,13 +18,25 @@ export default function App() {
       </div>
 
       <Routes>
-        {/* Ruta principal redirige al login */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        {/* Ruta principal redirige a tutoriales */}
+        <Route path="/" element={<Navigate to="/tutorials" replace />} />
 
         {/* Rutas públicas de autenticación */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
+
+        {/* Rutas de tutoriales */}
+        <Route path="/tutorials" element={<TutorialsListPage />} />
+        <Route path="/tutorials/:id" element={<TutorialDetailPage />} />
+        <Route
+          path="/tutorials/create"
+          element={
+            <ExpertRoute>
+              <CreateTutorialPage />
+            </ExpertRoute>
+          }
+        />
 
         {/* Rutas protegidas */}
         <Route
@@ -33,7 +49,7 @@ export default function App() {
         />
 
         {/* Ruta 404 */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/tutorials" replace />} />
       </Routes>
     </>
   );
