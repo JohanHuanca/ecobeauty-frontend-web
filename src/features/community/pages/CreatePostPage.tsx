@@ -24,42 +24,44 @@ export function CreatePostPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <Link
-        to="/community"
-        className="mb-6 inline-flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-500"
-      >
-        <svg
-          className="mr-2 h-4 w-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <Link
+          to="/community"
+          className="mb-6 inline-flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-500"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-        Volver a la comunidad
-      </Link>
+          <svg
+            className="mr-2 h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Volver a la comunidad
+        </Link>
 
-      <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-        <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-          Crear publicación
-        </h1>
-        <p className="mb-6 text-gray-600 dark:text-gray-400">
-          Comparte tus experiencias, dudas o consejos con la comunidad
-        </p>
+        <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+          <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+            Crear publicación
+          </h1>
+          <p className="mb-6 text-gray-600 dark:text-gray-400">
+            Comparte tus experiencias, dudas o consejos con la comunidad
+          </p>
 
-        {error && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
-            <p className="text-red-800 dark:text-red-200">{error}</p>
-          </div>
-        )}
+          {error && (
+            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
+              <p className="text-red-800 dark:text-red-200">{error}</p>
+            </div>
+          )}
 
-        <PostForm onSubmit={handleSubmit} isLoading={isLoading} />
+          <PostForm onSubmit={handleSubmit} isLoading={isLoading} />
+        </div>
       </div>
     </div>
   );

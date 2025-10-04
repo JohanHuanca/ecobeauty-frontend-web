@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -10,9 +10,10 @@ import {
   Badge,
   Spinner,
 } from "flowbite-react";
-import { HiUser, HiLogout, HiCamera } from "react-icons/hi";
+import { HiUser, HiLogout, HiCamera, HiStar } from "react-icons/hi";
 import { useSupabaseAuth } from "../../../core/services/useSupabaseAuth";
 import { supabase, signOut } from "../../../core/services/supabase";
+import { checkIfHasProfile } from "../../experts/services/expertsService";
 
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -25,6 +26,28 @@ export function ProfilePage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [hasExpertProfile, setHasExpertProfile] = useState<boolean | null>(
+    null,
+  );
+  const [showBecomeExpertModal, setShowBecomeExpertModal] = useState(false);
+  const [becomingExpert, setBecomingExpert] = useState(false);
+
+  // Verificar si el usuario ya tiene un perfil de experto
+  useEffect(() => {
+    const checkUserExpertProfile = async () => {
+      if (!profile) return;
+      try {
+        const hasProfile = await checkIfHasProfile(profile.id);
+        setHasExpertProfile(hasProfile);
+      } catch (error) {
+        console.error("Error al verificar perfil de experto:", error);
+      }
+    };
+
+    if (profile) {
+      checkUserExpertProfile();
+    }
+  }, [profile]);
 
   // Si está inicializando, mostrar spinner
   if (initializing) {
@@ -149,6 +172,51 @@ export function ProfilePage() {
     setLoading(true);
     await signOut();
     navigate("/login");
+  };
+
+  const handleBecomeExpert = async () => {
+    if (!profile) return;
+
+    setBecomingExpert(true);
+    setError(null);
+
+    try {
+      // Obtener el ID del rol 'expert'
+      const { data: expertRole, error: roleError } = await supabase
+        .from("roles")
+        .select("id")
+        .eq("name", "expert")
+        .single();
+
+      if (roleError) throw roleError;
+
+      // Asignar el rol de experto al usuario
+      const { error: assignError } = await supabase.from("user_roles").insert({
+        profile_id: profile.id,
+        role_id: expertRole.id,
+      });
+
+      if (assignError) {
+        // Verificar si el error es porque ya tiene el rol
+        if (assignError.code === "23505") {
+          setError("Ya tienes el rol de experto");
+        } else {
+          throw assignError;
+        }
+      } else {
+        setSuccess("¡Felicidades! Ahora eres un experto. Redirigiendo...");
+        setTimeout(() => {
+          // Recargar para actualizar roles y luego redirigir
+          window.location.href = "/my-expert-profile";
+        }, 2000);
+      }
+    } catch (err) {
+      console.error("Error al convertirse en experto:", err);
+      setError("Error al actualizar tu rol. Intenta nuevamente.");
+    } finally {
+      setBecomingExpert(false);
+      setShowBecomeExpertModal(false);
+    }
   };
 
   return (
@@ -300,6 +368,70 @@ export function ProfilePage() {
             )}
           </div>
 
+          {/* Sección para convertirse en experto */}
+          {!isExpert && hasExpertProfile === false && (
+            <div className="mt-6 border-t pt-6 dark:border-gray-700">
+              <div className="rounded-lg bg-gradient-to-r from-purple-50 to-blue-50 p-6 dark:from-purple-900 dark:to-blue-900">
+                <div className="flex items-start gap-4">
+                  <div className="rounded-full bg-purple-100 p-3 dark:bg-purple-800">
+                    <HiStar className="h-6 w-6 text-purple-600 dark:text-purple-300" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                      ¿Quieres compartir tu conocimiento?
+                    </h3>
+                    <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">
+                      Conviértete en experto y empieza a ofrecer tus servicios,
+                      crear cursos y tutoriales para la comunidad de EcoBeauty.
+                    </p>
+                    <ul className="mb-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                      <li className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        Crea y vende cursos de cosmética natural
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        Publica tutoriales gratuitos
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        Ofrece consultorías personalizadas
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        Aparece en el directorio de expertos
+                      </li>
+                    </ul>
+                    <Button
+                      color="purple"
+                      onClick={() => setShowBecomeExpertModal(true)}
+                      disabled={becomingExpert}
+                    >
+                      <HiStar className="mr-2 h-5 w-5" />
+                      Convertirme en experto
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Botón para ir al perfil de experto si ya lo es */}
+          {isExpert && (
+            <div className="mt-6 border-t pt-6 dark:border-gray-700">
+              <Button
+                color="purple"
+                onClick={() => navigate("/my-expert-profile")}
+                className="w-full"
+              >
+                <HiStar className="mr-2 h-5 w-5" />
+                {hasExpertProfile
+                  ? "Ver mi perfil de experto"
+                  : "Crear mi perfil de experto"}
+              </Button>
+            </div>
+          )}
+
           <div className="mt-6 border-t pt-6 dark:border-gray-700">
             <Button
               color="failure"
@@ -312,6 +444,55 @@ export function ProfilePage() {
             </Button>
           </div>
         </Card>
+
+        {/* Modal de confirmación para convertirse en experto */}
+        {showBecomeExpertModal && (
+          <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
+            <Card className="w-full max-w-md">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Convertirse en Experto
+              </h3>
+              <div className="space-y-4">
+                <p className="text-gray-700 dark:text-gray-300">
+                  Al convertirte en experto, obtendrás acceso a funcionalidades
+                  adicionales de la plataforma:
+                </p>
+                <ul className="list-inside list-disc space-y-2 text-gray-600 dark:text-gray-400">
+                  <li>Crear y gestionar cursos de pago</li>
+                  <li>Publicar tutoriales gratuitos</li>
+                  <li>Crear tu perfil profesional</li>
+                  <li>Ofrecer consultorías y servicios</li>
+                  <li>Aparecer en el directorio de expertos</li>
+                </ul>
+                <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    <strong>Nota:</strong> Después de convertirte en experto,
+                    deberás completar tu perfil profesional para aparecer en el
+                    directorio.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleBecomeExpert}
+                  disabled={becomingExpert}
+                  color="purple"
+                  className="flex-1"
+                >
+                  {becomingExpert ? "Procesando..." : "Confirmar"}
+                </Button>
+                <Button
+                  color="gray"
+                  onClick={() => setShowBecomeExpertModal(false)}
+                  disabled={becomingExpert}
+                  className="flex-1"
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );

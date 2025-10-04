@@ -1,5 +1,7 @@
 import { Card, Avatar } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { HiHeart, HiChatAlt } from "react-icons/hi";
+import { YouTubeEmbed } from "../../../shared/components/YouTubeEmbed";
 import type { Tutorial } from "../services/tutorialsService";
 
 interface TutorialCardProps {
@@ -26,14 +28,8 @@ export function TutorialCard({ tutorial }: TutorialCardProps) {
       </div>
 
       {tutorial.video_url && (
-        <div className="relative mb-3 aspect-video overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
-          <iframe
-            src={tutorial.video_url}
-            title={tutorial.title}
-            className="absolute inset-0 h-full w-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+        <div className="mb-3 overflow-hidden rounded-lg">
+          <YouTubeEmbed url={tutorial.video_url} title={tutorial.title} />
         </div>
       )}
 
@@ -44,6 +40,24 @@ export function TutorialCard({ tutorial }: TutorialCardProps) {
       <p className="mb-4 line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
         {tutorial.description}
       </p>
+
+      {/* Estadísticas de likes y comentarios */}
+      <div className="mb-4 flex items-center gap-4">
+        <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+          <HiHeart className="h-5 w-5 text-red-500" />
+          <span className="font-medium">{tutorial.likes_count || 0}</span>
+          <span className="hidden sm:inline">
+            {tutorial.likes_count === 1 ? "me gusta" : "me gusta"}
+          </span>
+        </div>
+        <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+          <HiChatAlt className="h-5 w-5 text-blue-500" />
+          <span className="font-medium">{tutorial.comments_count || 0}</span>
+          <span className="hidden sm:inline">
+            {tutorial.comments_count === 1 ? "comentario" : "comentarios"}
+          </span>
+        </div>
+      </div>
 
       <Link
         to={`/tutorials/${tutorial.id}`}

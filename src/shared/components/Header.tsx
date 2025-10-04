@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Button } from "flowbite-react";
+import {
+  HiSparkles,
+  HiBookOpen,
+  HiAcademicCap,
+  HiUser,
+  HiLogout,
+} from "react-icons/hi";
+import { GiFlowerPot } from "react-icons/gi";
 import { useSupabaseAuth } from "../../core/services/useSupabaseAuth";
 import { signOut } from "../../core/services/supabase";
 
@@ -82,8 +90,9 @@ export function Header() {
           className="flex items-center space-x-3"
           onClick={() => setIsMenuOpen(false)}
         >
+          <GiFlowerPot className="h-8 w-8 text-green-600 dark:text-green-400" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            🌿 EcoBeauty
+            EcoBeauty
           </span>
         </Link>
 
@@ -110,28 +119,86 @@ export function Header() {
                     <span className="block text-sm font-medium text-gray-900 dark:text-white">
                       {profile?.full_name || "Usuario"}
                     </span>
-                    <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
-                      {isExpert ? "✨ Experto" : "🌱 Principiante"}
+                    <span className="flex items-center gap-1 truncate text-sm text-gray-500 dark:text-gray-400">
+                      {isExpert ? (
+                        <>
+                          <HiSparkles className="h-4 w-4" />
+                          <span>Experto</span>
+                        </>
+                      ) : (
+                        <>
+                          <GiFlowerPot className="h-4 w-4" />
+                          <span>Principiante</span>
+                        </>
+                      )}
                     </span>
                   </div>
                   <ul className="py-2">
                     <li>
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
                         onClick={() => setIsDropdownOpen(false)}
                       >
-                        Mi perfil
+                        <HiUser className="h-4 w-4" />
+                        <span>Mi perfil</span>
                       </Link>
                     </li>
+                    <li>
+                      <Link
+                        to="/my-courses"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        <HiBookOpen className="h-4 w-4" />
+                        <span>Mis cursos</span>
+                      </Link>
+                    </li>
+                    {isExpert && (
+                      <>
+                        <li>
+                          <Link
+                            to="/my-created-courses"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                            onClick={() => setIsDropdownOpen(false)}
+                          >
+                            <HiAcademicCap className="h-4 w-4" />
+                            <span>Mis cursos creados</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/my-created-tutorials"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                            onClick={() => setIsDropdownOpen(false)}
+                          >
+                            <HiBookOpen className="h-4 w-4" />
+                            <span>Mis tutoriales creados</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/my-expert-profile"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                            onClick={() => setIsDropdownOpen(false)}
+                          >
+                            <HiSparkles className="h-4 w-4" />
+                            <span>Mi perfil de experto</span>
+                          </Link>
+                        </li>
+                      </>
+                    )}
                   </ul>
                   <div className="py-2">
                     <button
                       onClick={handleLogout}
                       disabled={isLoggingOut}
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:text-gray-200 dark:hover:bg-gray-600"
+                      className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:text-gray-200 dark:hover:bg-gray-600"
                     >
-                      {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
+                      <HiLogout className="h-4 w-4" />
+                      <span>
+                        {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -186,11 +253,12 @@ export function Header() {
             <li>
               <NavLink to="/tutorials">Tutoriales</NavLink>
             </li>
-            {session && isExpert && (
-              <li>
-                <NavLink to="/tutorials/create">✨ Crear Tutorial</NavLink>
-              </li>
-            )}
+            <li>
+              <NavLink to="/courses">Cursos</NavLink>
+            </li>
+            <li>
+              <NavLink to="/experts">Expertos</NavLink>
+            </li>
           </ul>
         </div>
       </div>

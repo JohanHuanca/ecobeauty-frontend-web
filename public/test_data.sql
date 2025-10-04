@@ -199,6 +199,57 @@ VALUES
 
 
 -- ##############################################################
+-- ## ❤️ LIKES EN TUTORIALES
+-- ##############################################################
+
+-- Likes en Tutorial 1 (Jabón de Lavanda) - 3 likes
+INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
+VALUES 
+(
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  1,
+  NOW() - INTERVAL '3 days'
+),
+(
+  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  1,
+  NOW() - INTERVAL '2 days'
+);
+
+-- Likes en Tutorial 2 (Crema Facial) - 2 likes
+INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
+VALUES 
+(
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  2,
+  NOW() - INTERVAL '4 days'
+);
+
+-- Likes en Tutorial 3 (Champú Sólido) - 4 likes (el más popular)
+INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
+VALUES 
+(
+  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  3,
+  NOW() - INTERVAL '2 days'
+),
+(
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  3,
+  NOW() - INTERVAL '1 day'
+);
+
+-- Likes en Tutorial 4 (Bálsamo Labial) - 1 like
+INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
+VALUES 
+(
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  4,
+  NOW() - INTERVAL '6 hours'
+);
+
+
+-- ##############################################################
 -- ## 📝 NOTAS IMPORTANTES
 -- ##############################################################
 
@@ -401,4 +452,471 @@ IMPORTANTE: Para que las imágenes funcionen, necesitas crear el bucket en Supab
 4. Las imágenes se subirán automáticamente desde el frontend
 
 Las URLs de ejemplo en este script usan Unsplash solo para demostración.
+*/
+
+
+-- ##############################################################
+-- ## 🎓 ÉPICA 3: CURSOS - DATA DE PRUEBA
+-- ##############################################################
+
+-- Curso 1: Introducción a la Cosmética Natural (Publicado)
+INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
+VALUES (
+  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  'Introducción a la Cosmética Natural',
+  'Curso completo para principiantes que quieren adentrarse en el mundo de la cosmética natural. Aprenderás sobre ingredientes, técnicas básicas, seguridad y formulación.
+
+En este curso cubrimos:
+- Fundamentos de la cosmética natural
+- Ingredientes esenciales y sus propiedades
+- Normas de seguridad e higiene
+- Cómo formular productos básicos
+- Conservación y almacenamiento
+
+Incluye 8 lecciones con videos HD, material descargable y acceso de por vida.',
+  49.99,
+  true,
+  NOW() - INTERVAL '10 days'
+);
+
+-- Curso 2: Jabones Artesanales Avanzados (Publicado)
+INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
+VALUES (
+  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  'Jabones Artesanales: De Principiante a Experto',
+  'Domina el arte de la saponificación en frío y crea jabones profesionales dignos de vender.
+
+Contenido del curso:
+- Método en frío vs método en caliente
+- Cálculo de lejía y formulación avanzada
+- Técnicas de swirl y diseño
+- Jabones especiales: exfoliantes, faciales, para bebés
+- Packaging y presentación profesional
+- Aspectos legales para venta
+
+12 lecciones con proyectos prácticos. Certificado al finalizar.',
+  79.99,
+  true,
+  NOW() - INTERVAL '7 days'
+);
+
+-- Curso 3: Cremas y Lociones Profesionales (Publicado)
+INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
+VALUES (
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  'Formulación de Cremas y Lociones Profesionales',
+  'Aprende a crear emulsiones estables y productos de textura perfecta como los comerciales, pero 100% naturales.
+
+Módulos incluidos:
+- Química de emulsiones
+- Emulsionantes naturales
+- Fases acuosa y oleosa
+- Activos y conservantes naturales
+- Troubleshooting: solución de problemas comunes
+- 15 recetas paso a paso
+
+Nivel intermedio. 10 lecciones + bonus de formulación personalizada.',
+  89.99,
+  true,
+  NOW() - INTERVAL '5 days'
+);
+
+-- Curso 4: Cosmética Capilar Natural (Borrador - No publicado aún)
+INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
+VALUES (
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  'Productos Capilares Naturales: Champús, Acondicionadores y Más',
+  'Curso completo sobre formulación de productos para el cuidado del cabello sin químicos agresivos.
+
+Contenido en desarrollo:
+- Champús líquidos y sólidos
+- Acondicionadores y mascarillas
+- Tratamientos para problemas específicos
+- Productos de styling natural
+- Adaptación según tipo de cabello
+
+Este curso está en fase final de producción. Se publicará próximamente con 14 lecciones.',
+  69.99,
+  false,  -- No publicado
+  NOW() - INTERVAL '2 days'
+);
+
+
+-- ##############################################################
+-- ## 📚 LECCIONES DE LOS CURSOS
+-- ##############################################################
+
+-- Lecciones del Curso 1: Introducción a la Cosmética Natural
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+VALUES 
+(
+  1,
+  'Bienvenida y Presentación del Curso',
+  'En esta primera lección te doy la bienvenida al curso y te explico todo lo que aprenderás.
+
+¿Qué incluye este curso?
+- 8 lecciones en video HD
+- Material descargable en PDF
+- Recetas paso a paso
+- Soporte en la comunidad
+
+Este curso es perfecto para ti si:
+- Nunca has hecho cosmética casera
+- Quieres productos más naturales para tu piel
+- Deseas ahorrar dinero haciendo tus propios productos
+- Estás considerando emprender en cosmética natural
+
+¡Empecemos!',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  1,
+  NOW() - INTERVAL '10 days'
+),
+(
+  1,
+  'Ingredientes Esenciales',
+  'Conoce los ingredientes básicos que usaremos a lo largo del curso.
+
+ACEITES BASE:
+- Aceite de coco: hidratante, antibacterial
+- Aceite de oliva: nutritivo, rico en vitamina E
+- Aceite de jojoba: equilibrante, similar al sebo humano
+- Aceite de almendras: suave, ideal para piel sensible
+
+MANTECAS:
+- Manteca de karité: súper hidratante
+- Manteca de cacao: firme, aromática
+- Manteca de mango: ligera, nutritiva
+
+OTROS INGREDIENTES:
+- Cera de abeja: emulsionante natural
+- Aceites esenciales: aroma y propiedades terapéuticas
+- Arcillas: purificantes y mineralizantes
+
+Dónde comprar ingredientes de calidad y cómo almacenarlos correctamente.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  2,
+  NOW() - INTERVAL '10 days'
+),
+(
+  1,
+  'Seguridad e Higiene en el Laboratorio Casero',
+  'La seguridad es lo primero. Aprende las normas básicas para trabajar de forma segura.
+
+NORMAS DE HIGIENE:
+1. Lava y desinfecta todos los utensilios antes de usar
+2. Usa agua destilada o hervida
+3. Trabaja con manos limpias o guantes
+4. Esteriliza los recipientes finales
+
+EQUIPAMIENTO DE SEGURIDAD:
+- Guantes de nitrilo
+- Gafas protectoras (especialmente con soda cáustica)
+- Delantal o ropa vieja
+- Área bien ventilada
+
+CONSERVACIÓN:
+- Usa conservantes naturales cuando el producto tiene agua
+- Etiqueta siempre con fecha de elaboración
+- Conoce la vida útil de cada producto
+- Almacena en lugar fresco y seco
+
+También veremos qué hacer en caso de reacciones alérgicas y cómo hacer test de parche.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  3,
+  NOW() - INTERVAL '9 days'
+);
+
+-- Lecciones del Curso 2: Jabones Artesanales
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+VALUES 
+(
+  2,
+  'Introducción a la Saponificación',
+  'Entiende la química detrás del jabón y por qué funciona.
+
+¿QUÉ ES LA SAPONIFICACIÓN?
+Es la reacción química entre un ácido graso (aceite) y una base (soda cáustica) que produce jabón y glicerina.
+
+HISTORIA:
+El jabón se ha fabricado durante miles de años. Los antiguos babilonios ya lo hacían en el 2800 a.C.
+
+TIPOS DE JABÓN:
+- Jabón en barra (el que haremos)
+- Jabón líquido (diferente proceso)
+- Jabón de glicerina (melt & pour)
+
+BENEFICIOS DEL JABÓN CASERO:
+- Controlas todos los ingredientes
+- Conservas la glicerina natural
+- Puedes personalizarlo
+- Más económico a largo plazo
+- Más ecológico
+
+En las próximas lecciones pasaremos a la práctica.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  1,
+  NOW() - INTERVAL '7 days'
+),
+(
+  2,
+  'Tu Primer Jabón: Receta Básica',
+  'Haremos juntos tu primer jabón desde cero usando el método en frío.
+
+INGREDIENTES:
+- 400g aceite de oliva
+- 200g aceite de coco
+- 100g manteca de karité
+- 97g soda cáustica (NaOH)
+- 220ml agua destilada
+
+EQUIPO NECESARIO:
+- Balanza digital
+- Batidora de mano
+- Moldes de silicona
+- Termómetro
+- Recipientes de vidrio o acero inoxidable
+
+PROCEDIMIENTO:
+1. Preparar la lejía (CUIDADO: usar protección)
+2. Derretir y mezclar los aceites
+3. Combinar cuando ambos estén a 40-45°C
+4. Batir hasta llegar a "trace"
+5. Verter en moldes
+6. Dejar curar 4-6 semanas
+
+Sigue el video paso a paso y no te saltees ninguna medida de seguridad.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  2,
+  NOW() - INTERVAL '7 days'
+),
+(
+  2,
+  'Calculadora de Saponificación y Formulación',
+  'Aprende a crear tus propias recetas usando calculadoras online.
+
+CONCEPTOS CLAVE:
+- Índice de saponificación de cada aceite
+- Porcentaje de sobreengrasado
+- Dureza vs suavidad del jabón
+- Poder limpiador vs hidratación
+
+HERRAMIENTAS:
+- SoapCalc.net (la más usada)
+- The Sage (muy completa)
+- Mendrulandia (en español)
+
+Te enseñaré a:
+- Calcular la cantidad exacta de soda cáustica
+- Ajustar el sobreengrasado (5-8% recomendado)
+- Balancear propiedades del jabón
+- Sustituir aceites correctamente
+
+Práctica: Crearás 3 recetas personalizadas usando diferentes combinaciones de aceites.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  3,
+  NOW() - INTERVAL '6 days'
+);
+
+-- Lecciones del Curso 3: Cremas y Lociones
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+VALUES 
+(
+  3,
+  'Fundamentos de las Emulsiones',
+  'Una emulsión es la mezcla estable de agua y aceite. Suena simple, pero requiere técnica.
+
+TIPOS DE EMULSIONES:
+- Aceite en agua (O/W): cremas ligeras, lociones
+- Agua en aceite (W/O): cremas muy nutritivas, bálsamos
+
+COMPONENTES DE UNA EMULSIÓN:
+1. Fase acuosa (agua, hidrolatos, aloe vera)
+2. Fase oleosa (aceites, mantecas, ceras)
+3. Emulsionante (une ambas fases)
+4. Activos (vitaminas, extractos)
+5. Conservante (esencial si hay agua)
+
+¿POR QUÉ SE SEPARAN?
+- Temperaturas inadecuadas
+- Emulsionante insuficiente
+- Mala técnica de mezclado
+- Incompatibilidad de ingredientes
+
+EMULSIONANTES NATURALES:
+- Cera emulsionante vegetal (Olivem, Montanov)
+- Lecitina de soja
+- Proteína de seda
+
+Te enseñaré a prevenir los problemas más comunes.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  1,
+  NOW() - INTERVAL '5 days'
+),
+(
+  3,
+  'Tu Primera Crema: Receta Base Universal',
+  'Esta receta base la usarás como punto de partida para infinitas variaciones.
+
+INGREDIENTES:
+Fase A (acuosa):
+- 70ml agua destilada
+- 5ml glicerina vegetal
+
+Fase B (oleosa):
+- 15ml aceite de almendras
+- 5ml aceite de jojoba
+- 3g cera emulsionante
+- 2g manteca de karité
+
+Fase C (activos):
+- 0.5ml vitamina E
+- 5 gotas aceite esencial
+- Conservante ECO (según fabricante)
+
+PROCEDIMIENTO:
+1. Calentar fase A y B por separado a 70-75°C
+2. Verter A sobre B lentamente
+3. Batir con minipimer 2-3 minutos
+4. Enfriar a 40°C antes de agregar fase C
+5. Batir nuevamente
+6. Envasar
+
+Resultado: 100ml de crema hidratante con textura profesional que dura 2-3 meses.',
+  'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  2,
+  NOW() - INTERVAL '5 days'
+);
+
+
+-- ##############################################################
+-- ## 📝 INSCRIPCIONES EN CURSOS
+-- ##############################################################
+
+-- Usuario 2 se inscribe en el Curso 1
+INSERT INTO public.course_enrollments (profile_id, course_id, enrolled_at)
+VALUES (
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  1,
+  NOW() - INTERVAL '8 days'
+);
+
+-- Usuario 2 también se inscribe en el Curso 2
+INSERT INTO public.course_enrollments (profile_id, course_id, enrolled_at)
+VALUES (
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  2,
+  NOW() - INTERVAL '3 days'
+);
+
+
+-- ##############################################################
+-- ## 📊 RESUMEN DE LA DATA DE PRUEBA
+-- ##############################################################
+
+/*
+TUTORIALES: 6 tutoriales
+- 3 del usuario 0ece4fef (experto)
+- 3 del usuario 441a923b (experto)
+
+COMUNIDAD: 5 publicaciones + 12 comentarios
+- Variedad de contenido: preguntas, logros, consejos, problemas
+- Comentarios y respuestas anidadas
+
+CURSOS: 4 cursos
+- 3 publicados (visibles en catálogo)
+- 1 borrador (solo visible para el creador)
+- 2 cursos del usuario 0ece4fef
+- 2 cursos del usuario 441a923b
+
+LECCIONES: 8 lecciones distribuidas en los cursos publicados
+- Curso 1: 3 lecciones
+- Curso 2: 3 lecciones
+- Curso 3: 2 lecciones
+- Curso 4: 0 lecciones (en borrador)
+
+INSCRIPCIONES: 2 inscripciones
+- Usuario 441a923b inscrito en Curso 1 y Curso 2
+
+-- ##############################################################
+-- ## 👥 PERFILES DE EXPERTOS DE PRUEBA
+-- ##############################################################
+
+-- Experto 1: María Rodríguez - Especialista en cosmética natural
+INSERT INTO public.expert_profiles (profile_id, bio, specialties, phone_number, hourly_rate, created_at)
+VALUES (
+  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  'Soy María Rodríguez, farmacéutica especializada en cosmética natural con más de 10 años de experiencia. Mi pasión es enseñar a las personas a crear sus propios productos de belleza utilizando ingredientes naturales y sostenibles.
+
+He trabajado con laboratorios de cosmética orgánica en España y Bolivia, y actualmente dirijo mi propio taller de formulación botánica. Me especializo en jabones artesanales, cremas faciales y tratamientos capilares naturales.
+
+Ofrezco consultorías personalizadas para emprendedores que desean iniciar su línea de cosméticos naturales, así como asesoría en formulación y certificaciones orgánicas. Mis servicios incluyen desarrollo de recetas, análisis de ingredientes y estrategias de comercialización.',
+  ARRAY['Jabones artesanales', 'Cremas faciales naturales', 'Cosmética botánica', 'Formulación orgánica', 'Tratamientos capilares'],
+  '+591 70123456',
+  35.00,
+  NOW() - INTERVAL '30 days'
+);
+
+-- Experto 2: Juan Pérez - Consultor en emprendimientos eco-friendly
+INSERT INTO public.expert_profiles (profile_id, bio, specialties, phone_number, hourly_rate, created_at)
+VALUES (
+  '441a923b-01e5-4271-ab52-fee115c469b2',
+  'Hola, soy Juan Pérez, ingeniero ambiental y emprendedor en el sector de productos eco-friendly. Llevo 8 años ayudando a personas y empresas a desarrollar líneas de cosméticos sostenibles y rentables.
+
+Mi experiencia incluye la creación de tres marcas de cosmética natural desde cero, con presencia en tiendas físicas y plataformas digitales. Me especializo en la parte empresarial: desde la formulación inicial hasta el marketing y las ventas.
+
+Ofrezco consultorías para quienes quieren convertir su pasión por la cosmética natural en un negocio exitoso. Te ayudo con planes de negocio, análisis de costos, estrategias de branding y certificaciones necesarias para vender productos cosméticos en Bolivia y Latinoamérica.
+
+También dicto talleres presenciales en La Paz sobre elaboración de productos de limpieza ecológicos y perfumes naturales.',
+  ARRAY['Emprendimientos eco-friendly', 'Plan de negocios', 'Marketing de cosméticos', 'Productos de limpieza ecológicos', 'Perfumería natural', 'Certificaciones orgánicas'],
+  '+591 71234567',
+  40.00,
+  NOW() - INTERVAL '15 days'
+);
+
+/*
+RESUMEN COMPLETO DE DATA DE PRUEBA
+==================================
+
+TUTORIALES: 4 tutoriales publicados
+- Tutorial 1: Jabón de lavanda (Usuario 0ece4fef)
+- Tutorial 2: Crema facial (Usuario 0ece4fef)
+- Tutorial 3: Shampoo sólido (Usuario 441a923b)
+- Tutorial 4: Bálsamo labial (Usuario 0ece4fef)
+
+PUBLICACIONES COMUNIDAD: 4 posts + 3 comentarios
+- Post 1: "Mis primeros jabones" (Usuario 0ece4fef)
+  - Comentario de Usuario 441a923b
+- Post 2: "Ayuda con manteca de karité" (Usuario 441a923b)
+  - Comentario de Usuario 0ece4fef
+- Post 3: "Nueva receta de crema" (Usuario 0ece4fef)
+  - Sin comentarios
+- Post 4: "Duda sobre aceites esenciales" (Usuario 441a923b)
+  - Comentario de Usuario 0ece4fef
+
+CURSOS: 4 cursos
+- Curso 1: "Introducción a los Jabones Artesanales" - $49.99 (PUBLICADO)
+- Curso 2: "Cremas Faciales Naturales Avanzadas" - $79.99 (PUBLICADO)
+- Curso 3: "Perfumería Natural: Crea tus propios perfumes" - $99.99 (PUBLICADO)
+- Curso 4: "Shampoos Sólidos Profesionales" - $89.99 (NO PUBLICADO - BORRADOR)
+
+LECCIONES: 8 lecciones distribuidas en los cursos publicados
+- Curso 1: 3 lecciones
+- Curso 2: 3 lecciones
+- Curso 3: 2 lecciones
+- Curso 4: 0 lecciones (en borrador)
+
+INSCRIPCIONES: 2 inscripciones
+- Usuario 441a923b inscrito en Curso 1 y Curso 2
+
+PERFILES DE EXPERTOS: 2 expertos
+- Experto 1: María Rodríguez (Usuario 0ece4fef)
+  - Especialidades: Jabones, Cremas faciales, Cosmética botánica, Formulación orgánica, Tratamientos capilares
+  - Tarifa: $35/hora
+  - WhatsApp: +591 70123456
+- Experto 2: Juan Pérez (Usuario 441a923b)
+  - Especialidades: Emprendimientos eco-friendly, Plan de negocios, Marketing, Productos de limpieza, Perfumería, Certificaciones
+  - Tarifa: $40/hora
+  - WhatsApp: +591 71234567
+
+¡Tu MVP está completo con data de prueba realista para todos los features!
 */

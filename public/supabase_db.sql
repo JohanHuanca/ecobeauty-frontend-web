@@ -92,6 +92,15 @@ CREATE TABLE public.tutorial_comments (
 );
 COMMENT ON TABLE public.tutorial_comments IS 'Comentarios y respuestas de los usuarios en los tutoriales.';
 
+-- Tabla para los "me gusta" en los tutoriales.
+CREATE TABLE public.tutorial_likes (
+  profile_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  tutorial_id BIGINT NOT NULL REFERENCES public.tutorials(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (profile_id, tutorial_id)
+);
+COMMENT ON TABLE public.tutorial_likes IS 'Registra los "me gusta" de los usuarios en los tutoriales.';
+
 
 -- ##############################################################
 -- ## 💬 ÉPICA 2: COMUNIDAD
@@ -182,6 +191,8 @@ CREATE INDEX ON public.user_roles (profile_id);
 CREATE INDEX ON public.tutorials (profile_id);
 CREATE INDEX ON public.tutorial_comments (tutorial_id);
 CREATE INDEX ON public.tutorial_comments (profile_id);
+CREATE INDEX ON public.tutorial_likes (tutorial_id);
+CREATE INDEX ON public.tutorial_likes (profile_id);
 CREATE INDEX ON public.posts (profile_id);
 CREATE INDEX ON public.post_comments (post_id);
 CREATE INDEX ON public.post_comments (profile_id);
