@@ -107,7 +107,11 @@ export function Header() {
               >
                 <Avatar
                   alt="Usuario"
-                  img={profile?.avatar_url || undefined}
+                  img={
+                    profile?.avatar_url ||
+                    session?.user?.user_metadata?.avatar_url ||
+                    undefined
+                  }
                   rounded
                 />
               </button>

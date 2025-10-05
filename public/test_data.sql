@@ -9,8 +9,8 @@
 -- SELECT id, email FROM auth.users;
 
 -- UUIDs reales configurados:
--- Usuario 1 (Experto): 0ece4fef-48d5-4dd2-b009-89b41083ddeb
--- Usuario 2 (Experto/Novice): 441a923b-01e5-4271-ab52-fee115c469b2
+-- Usuario 1 (Novice): b471a31e-4b0b-4c85-a0c0-7278d57c44af
+-- Usuario 2 (Experto): 1833bf95-e986-40ea-ad6d-fe554c1d0382
 
 
 -- ##############################################################
@@ -20,7 +20,7 @@
 -- Tutorial 1: Jabón Natural de Lavanda
 INSERT INTO public.tutorials (profile_id, title, description, video_url, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Cómo hacer jabón natural de lavanda',
   'En este tutorial aprenderás a crear tu propio jabón natural de lavanda desde cero. Utilizaremos ingredientes 100% naturales y aceites esenciales puros. Es un proceso sencillo que te tomará aproximadamente 1 hora, y el resultado es un jabón suave y aromático perfecto para piel sensible.
 
@@ -41,7 +41,7 @@ El proceso incluye la preparación de la lejía, mezcla de aceites, saponificaci
 -- Tutorial 2: Crema Facial Hidratante
 INSERT INTO public.tutorials (profile_id, title, description, video_url, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Crema facial hidratante con aloe vera',
   'Aprende a preparar una crema facial hidratante natural con aloe vera, ideal para todo tipo de piel. Esta receta es perfecta para principiantes y usa ingredientes fáciles de conseguir.
 
@@ -60,7 +60,7 @@ Esta crema se absorbe rápidamente, no deja sensación grasosa y es perfecta par
 -- Tutorial 3: Champú Sólido
 INSERT INTO public.tutorials (profile_id, title, description, video_url, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Champú sólido ecológico para cabello graso',
   'Descubre cómo hacer tu propio champú sólido sin plásticos ni químicos agresivos. Esta receta es especialmente efectiva para cabellos grasos y da volumen natural.
 
@@ -85,7 +85,7 @@ El resultado es un champú que limpia profundamente sin resecar el cuero cabellu
 -- Tutorial 4: Desodorante Natural
 INSERT INTO public.tutorials (profile_id, title, description, video_url, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Desodorante natural en crema sin aluminio',
   'Tutorial paso a paso para crear un desodorante natural efectivo que realmente funciona. Sin aluminio, sin alcohol, sin irritantes.
 
@@ -108,7 +108,7 @@ Duración: 6-8 meses si se mantiene en lugar fresco',
 -- Tutorial 5: Bálsamo Labial
 INSERT INTO public.tutorials (profile_id, title, description, video_url, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Bálsamo labial nutritivo con miel y cacao',
   'Aprende a hacer bálsamos labiales caseros 100% naturales. Perfectos para regalar o para tu uso personal. Esta receta rinde para aproximadamente 10 tubos pequeños.
 
@@ -133,7 +133,7 @@ También te enseñaré diferentes variaciones: con color natural, con sabores, c
 -- Tutorial 6: Exfoliante Corporal
 INSERT INTO public.tutorials (profile_id, title, description, video_url, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Exfoliante corporal de café y azúcar',
   'Un exfoliante casero súper efectivo que deja tu piel suave como la seda. Además, ayuda a mejorar la circulación y reduce la apariencia de celulitis.
 
@@ -162,91 +162,84 @@ Duración: 1 mes en recipiente hermético',
 
 -- Comentarios en Tutorial 1 (Jabón de Lavanda)
 INSERT INTO public.tutorial_comments (profile_id, tutorial_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  1,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
   '¡Me encantó este tutorial! Hice mi primer jabón y quedó perfecto. Gracias por compartir 🌸',
   NOW() - INTERVAL '2 days'
-),
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  1,
-  'Excelente trabajo. Una sugerencia: también puedes agregar un poco de avena molida para efecto exfoliante.',
+FROM public.tutorials t
+WHERE t.title = 'Cómo hacer jabón natural de lavanda';
+
+INSERT INTO public.tutorial_comments (profile_id, tutorial_id, content, created_at)
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
+  'Una pregunta: ¿puedo sustituir el aceite de lavanda por otro aceite esencial?',
   NOW() - INTERVAL '1 day'
-);
+FROM public.tutorials t
+WHERE t.title = 'Cómo hacer jabón natural de lavanda';
 
 -- Respuesta al comentario anterior
 INSERT INTO public.tutorial_comments (profile_id, tutorial_id, parent_comment_id, content, created_at)
-VALUES 
-(
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
-  1,
-  2, -- ID del comentario al que responde
-  '¡Gracias por el tip! Tienes razón, la avena es una excelente adición. Lo mencionaré en mi próximo video 👍',
+SELECT 
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
+  t.id,
+  (SELECT id FROM public.tutorial_comments ORDER BY created_at DESC LIMIT 1 OFFSET 0), -- Último comentario insertado
+  '¡Claro! Puedes usar aceite esencial de menta, romero o incluso cítricos. Solo mantén la misma cantidad 👍',
   NOW() - INTERVAL '12 hours'
-);
+FROM public.tutorials t
+WHERE t.title = 'Cómo hacer jabón natural de lavanda';
 
 -- Comentarios en Tutorial 3 (Champú Sólido)
 INSERT INTO public.tutorial_comments (profile_id, tutorial_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  3,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
   '¿Dónde puedo conseguir el tensioactivo SCI? No lo encuentro en tiendas locales 😕',
   NOW() - INTERVAL '5 hours'
-);
+FROM public.tutorials t
+WHERE t.title = 'Champú sólido ecológico para cabello graso';
 
 
 -- ##############################################################
 -- ## ❤️ LIKES EN TUTORIALES
 -- ##############################################################
 
--- Likes en Tutorial 1 (Jabón de Lavanda) - 3 likes
+-- Likes en Tutorial 1 (Jabón de Lavanda)
 INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  1,
-  NOW() - INTERVAL '3 days'
-),
-(
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
-  1,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
   NOW() - INTERVAL '2 days'
-);
+FROM public.tutorials t
+WHERE t.title = 'Cómo hacer jabón natural de lavanda';
 
--- Likes en Tutorial 2 (Crema Facial) - 2 likes
+-- Likes en Tutorial 2 (Crema Facial)
 INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  2,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
   NOW() - INTERVAL '4 days'
-);
+FROM public.tutorials t
+WHERE t.title = 'Crema facial hidratante con aloe vera';
 
--- Likes en Tutorial 3 (Champú Sólido) - 4 likes (el más popular)
+-- Likes en Tutorial 3 (Champú Sólido)
 INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
-VALUES 
-(
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
-  3,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
   NOW() - INTERVAL '2 days'
-),
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  3,
-  NOW() - INTERVAL '1 day'
-);
+FROM public.tutorials t
+WHERE t.title = 'Champú sólido ecológico para cabello graso';
 
--- Likes en Tutorial 4 (Bálsamo Labial) - 1 like
+-- Likes en Tutorial 4 (Desodorante)
 INSERT INTO public.tutorial_likes (profile_id, tutorial_id, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  4,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  t.id,
   NOW() - INTERVAL '6 hours'
-);
+FROM public.tutorials t
+WHERE t.title = 'Desodorante natural en crema sin aluminio';
 
 
 -- ##############################################################
@@ -291,7 +284,7 @@ VALUES (
 -- Publicación 1: Pregunta sobre ingredientes
 INSERT INTO public.posts (profile_id, content, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
   '¡Hola comunidad! 👋 Estoy empezando en el mundo de la cosmética natural y tengo una duda: ¿puedo sustituir el aceite de jojoba por aceite de almendras en la receta de crema facial? ¿Alguien lo ha probado?',
   NOW() - INTERVAL '6 hours'
 );
@@ -299,7 +292,7 @@ VALUES (
 -- Publicación 2: Compartir éxito con imagen
 INSERT INTO public.posts (profile_id, content, image_url, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   '¡Mi primer lote de jabones de lavanda quedó perfecto! 💜✨
 
 Después de varios intentos fallidos, finalmente logré la textura y el aroma que buscaba. La clave estuvo en respetar los tiempos de saponificación y no apurarme.
@@ -317,7 +310,7 @@ Tips que aprendí:
 -- Publicación 3: Consejo de experto
 INSERT INTO public.posts (profile_id, content, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   '🌿 CONSEJO DEL DÍA: Almacenamiento de productos naturales
 
 Muchos me preguntan por qué sus cremas caseras se ponen rancias rápidamente. Aquí van algunos tips esenciales:
@@ -337,7 +330,7 @@ Los productos naturales duran menos que los comerciales porque no tienen conserv
 -- Publicación 4: Compartir tutorial externo
 INSERT INTO public.posts (profile_id, content, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
   '¿Alguien más vio el tutorial de champú sólido? Lo hice este fin de semana y funcionó increíble! Mi cabello nunca había estado tan suave y con tanto volumen.
 
 Lo mejor es que ahora no uso botellas plásticas 🌍♻️
@@ -349,7 +342,7 @@ Próximamente voy a intentar hacer el desodorante natural. ¿Alguien lo ha proba
 -- Publicación 5: Problema y solicitud de ayuda
 INSERT INTO public.posts (profile_id, content, image_url, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
   'AYUDA: Mi crema se separó 😭
 
 Hice una crema facial siguiendo una receta pero después de unos días se separó en dos fases. ¿Qué pudo haber salido mal?
@@ -372,71 +365,62 @@ Ingredientes que usé:
 
 -- Comentarios en Publicación 1 (pregunta sobre jojoba)
 INSERT INTO public.post_comments (profile_id, post_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  1,
+SELECT 
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
+  p.id,
   'Sí puedes sustituirlo! Ambos son aceites ligeros y no comedogénicos. El de almendras es un poco más nutritivo pero la textura será muy similar 😊',
   NOW() - INTERVAL '5 hours'
-),
-(
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
-  1,
-  'Yo siempre uso aceite de almendras y me funciona perfecto. Solo ten en cuenta que tiene un aroma más suave que el jojoba.',
-  NOW() - INTERVAL '4 hours'
-);
+FROM public.posts p
+WHERE p.content LIKE '%puedo sustituir el aceite de jojoba%';
 
 -- Respuesta agradeciendo
 INSERT INTO public.post_comments (profile_id, post_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  1,
-  '¡Muchas gracias a ambos! Me voy a animar a probar entonces. Les cuento cómo me va 💚',
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  p.id,
+  '¡Muchas gracias! Me voy a animar a probar entonces. Les cuento cómo me va 💚',
   NOW() - INTERVAL '3 hours'
-);
+FROM public.posts p
+WHERE p.content LIKE '%puedo sustituir el aceite de jojoba%';
 
 -- Comentarios en Publicación 2 (jabones exitosos)
 INSERT INTO public.post_comments (profile_id, post_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  2,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  p.id,
   '¡Qué hermosos quedaron! Me encantan los colores. Yo recién empiezo y todavía me da miedo trabajar con soda cáustica 😅',
   NOW() - INTERVAL '2 days'
-),
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  2,
-  'Excelente trabajo! Los tonos están muy parejos. ¿Usaste colorante natural o mica?',
-  NOW() - INTERVAL '2 days'
-);
+FROM public.posts p
+WHERE p.content LIKE '%Mi primer lote de jabones de lavanda%';
 
 -- Comentarios en Publicación 3 (consejo de almacenamiento)
 INSERT INTO public.post_comments (profile_id, post_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  3,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  p.id,
   'Súper útil! No sabía lo de la vitamina E como antioxidante. ¿Qué porcentaje recomiendas agregar?',
   NOW() - INTERVAL '20 hours'
-);
+FROM public.posts p
+WHERE p.content LIKE '%CONSEJO DEL DÍA: Almacenamiento%';
 
 -- Comentarios en Publicación 5 (crema separada)
 INSERT INTO public.post_comments (profile_id, post_id, content, created_at)
-VALUES 
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  5,
+SELECT 
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
+  p.id,
   'Probablemente no emulsionaste lo suficiente o las temperaturas no estaban parejas. Tienes que mezclar la fase acuosa y oleosa cuando ambas estén a 70-75°C y batir con minipimer por al menos 2 minutos.',
   NOW() - INTERVAL '1 hour'
-),
-(
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  5,
+FROM public.posts p
+WHERE p.content LIKE '%AYUDA: Mi crema se separó%';
+
+INSERT INTO public.post_comments (profile_id, post_id, content, created_at)
+SELECT 
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
+  p.id,
   'A mí me pasó lo mismo la primera vez. Usa un termómetro de cocina para controlar bien las temperaturas, hace toda la diferencia!',
   NOW() - INTERVAL '30 minutes'
-);
+FROM public.posts p
+WHERE p.content LIKE '%AYUDA: Mi crema se separó%';
 
 
 -- ##############################################################
@@ -462,7 +446,7 @@ Las URLs de ejemplo en este script usan Unsplash solo para demostración.
 -- Curso 1: Introducción a la Cosmética Natural (Publicado)
 INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Introducción a la Cosmética Natural',
   'Curso completo para principiantes que quieren adentrarse en el mundo de la cosmética natural. Aprenderás sobre ingredientes, técnicas básicas, seguridad y formulación.
 
@@ -482,7 +466,7 @@ Incluye 8 lecciones con videos HD, material descargable y acceso de por vida.',
 -- Curso 2: Jabones Artesanales Avanzados (Publicado)
 INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Jabones Artesanales: De Principiante a Experto',
   'Domina el arte de la saponificación en frío y crea jabones profesionales dignos de vender.
 
@@ -503,7 +487,7 @@ Contenido del curso:
 -- Curso 3: Cremas y Lociones Profesionales (Publicado)
 INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Formulación de Cremas y Lociones Profesionales',
   'Aprende a crear emulsiones estables y productos de textura perfecta como los comerciales, pero 100% naturales.
 
@@ -524,7 +508,7 @@ Nivel intermedio. 10 lecciones + bonus de formulación personalizada.',
 -- Curso 4: Cosmética Capilar Natural (Borrador - No publicado aún)
 INSERT INTO public.courses (expert_profile_id, title, description, price, is_published, created_at)
 VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Productos Capilares Naturales: Champús, Acondicionadores y Más',
   'Curso completo sobre formulación de productos para el cuidado del cabello sin químicos agresivos.
 
@@ -548,9 +532,8 @@ Este curso está en fase final de producción. Se publicará próximamente con 1
 
 -- Lecciones del Curso 1: Introducción a la Cosmética Natural
 INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
-VALUES 
-(
-  1,
+SELECT 
+  c.id,
   'Bienvenida y Presentación del Curso',
   'En esta primera lección te doy la bienvenida al curso y te explico todo lo que aprenderás.
 
@@ -570,9 +553,12 @@ Este curso es perfecto para ti si:
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   1,
   NOW() - INTERVAL '10 days'
-),
-(
-  1,
+FROM public.courses c
+WHERE c.title = 'Introducción a la Cosmética Natural';
+
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+SELECT 
+  c.id,
   'Ingredientes Esenciales',
   'Conoce los ingredientes básicos que usaremos a lo largo del curso.
 
@@ -596,9 +582,12 @@ Dónde comprar ingredientes de calidad y cómo almacenarlos correctamente.',
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   2,
   NOW() - INTERVAL '10 days'
-),
-(
-  1,
+FROM public.courses c
+WHERE c.title = 'Introducción a la Cosmética Natural';
+
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+SELECT 
+  c.id,
   'Seguridad e Higiene en el Laboratorio Casero',
   'La seguridad es lo primero. Aprende las normas básicas para trabajar de forma segura.
 
@@ -624,13 +613,13 @@ También veremos qué hacer en caso de reacciones alérgicas y cómo hacer test 
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   3,
   NOW() - INTERVAL '9 days'
-);
+FROM public.courses c
+WHERE c.title = 'Introducción a la Cosmética Natural';
 
 -- Lecciones del Curso 2: Jabones Artesanales
 INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
-VALUES 
-(
-  2,
+SELECT 
+  c.id,
   'Introducción a la Saponificación',
   'Entiende la química detrás del jabón y por qué funciona.
 
@@ -656,9 +645,12 @@ En las próximas lecciones pasaremos a la práctica.',
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   1,
   NOW() - INTERVAL '7 days'
-),
-(
-  2,
+FROM public.courses c
+WHERE c.title = 'Jabones Artesanales: De Principiante a Experto';
+
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+SELECT 
+  c.id,
   'Tu Primer Jabón: Receta Básica',
   'Haremos juntos tu primer jabón desde cero usando el método en frío.
 
@@ -688,9 +680,12 @@ Sigue el video paso a paso y no te saltees ninguna medida de seguridad.',
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   2,
   NOW() - INTERVAL '7 days'
-),
-(
-  2,
+FROM public.courses c
+WHERE c.title = 'Jabones Artesanales: De Principiante a Experto';
+
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+SELECT 
+  c.id,
   'Calculadora de Saponificación y Formulación',
   'Aprende a crear tus propias recetas usando calculadoras online.
 
@@ -715,13 +710,13 @@ Práctica: Crearás 3 recetas personalizadas usando diferentes combinaciones de 
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   3,
   NOW() - INTERVAL '6 days'
-);
+FROM public.courses c
+WHERE c.title = 'Jabones Artesanales: De Principiante a Experto';
 
 -- Lecciones del Curso 3: Cremas y Lociones
 INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
-VALUES 
-(
-  3,
+SELECT 
+  c.id,
   'Fundamentos de las Emulsiones',
   'Una emulsión es la mezcla estable de agua y aceite. Suena simple, pero requiere técnica.
 
@@ -751,9 +746,12 @@ Te enseñaré a prevenir los problemas más comunes.',
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   1,
   NOW() - INTERVAL '5 days'
-),
-(
-  3,
+FROM public.courses c
+WHERE c.title = 'Formulación de Cremas y Lociones Profesionales';
+
+INSERT INTO public.course_lessons (course_id, title, content_text, video_url, lesson_order, created_at)
+SELECT 
+  c.id,
   'Tu Primera Crema: Receta Base Universal',
   'Esta receta base la usarás como punto de partida para infinitas variaciones.
 
@@ -785,28 +783,31 @@ Resultado: 100ml de crema hidratante con textura profesional que dura 2-3 meses.
   'https://www.youtube.com/embed/dQw4w9WgXcQ',
   2,
   NOW() - INTERVAL '5 days'
-);
+FROM public.courses c
+WHERE c.title = 'Formulación de Cremas y Lociones Profesionales';
 
 
 -- ##############################################################
 -- ## 📝 INSCRIPCIONES EN CURSOS
 -- ##############################################################
 
--- Usuario 2 se inscribe en el Curso 1
+-- Usuario 1 (Novice) se inscribe en el Curso 1
 INSERT INTO public.course_enrollments (profile_id, course_id, enrolled_at)
-VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  1,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  c.id,
   NOW() - INTERVAL '8 days'
-);
+FROM public.courses c
+WHERE c.title = 'Introducción a la Cosmética Natural';
 
--- Usuario 2 también se inscribe en el Curso 2
+-- Usuario 1 (Novice) también se inscribe en el Curso 2
 INSERT INTO public.course_enrollments (profile_id, course_id, enrolled_at)
-VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
-  2,
+SELECT 
+  'b471a31e-4b0b-4c85-a0c0-7278d57c44af',
+  c.id,
   NOW() - INTERVAL '3 days'
-);
+FROM public.courses c
+WHERE c.title = 'Jabones Artesanales: De Principiante a Experto';
 
 
 -- ##############################################################
@@ -815,18 +816,16 @@ VALUES (
 
 /*
 TUTORIALES: 6 tutoriales
-- 3 del usuario 0ece4fef (experto)
-- 3 del usuario 441a923b (experto)
+- Todos creados por Usuario 441a923b (Experto)
 
-COMUNIDAD: 5 publicaciones + 12 comentarios
-- Variedad de contenido: preguntas, logros, consejos, problemas
-- Comentarios y respuestas anidadas
+COMUNIDAD: 5 publicaciones + comentarios
+- Usuario 0ece4fef (Novice) hace preguntas y participa
+- Usuario 441a923b (Experto) comparte consejos y responde
 
 CURSOS: 4 cursos
 - 3 publicados (visibles en catálogo)
 - 1 borrador (solo visible para el creador)
-- 2 cursos del usuario 0ece4fef
-- 2 cursos del usuario 441a923b
+- Todos creados por Usuario 441a923b (Experto)
 
 LECCIONES: 8 lecciones distribuidas en los cursos publicados
 - Curso 1: 3 lecciones
@@ -835,31 +834,16 @@ LECCIONES: 8 lecciones distribuidas en los cursos publicados
 - Curso 4: 0 lecciones (en borrador)
 
 INSCRIPCIONES: 2 inscripciones
-- Usuario 441a923b inscrito en Curso 1 y Curso 2
+- Usuario 0ece4fef (Novice) inscrito en Curso 1 y Curso 2
 
 -- ##############################################################
 -- ## 👥 PERFILES DE EXPERTOS DE PRUEBA
 -- ##############################################################
 
--- Experto 1: María Rodríguez - Especialista en cosmética natural
+-- Experto Único: Juan Pérez - Consultor en emprendimientos eco-friendly
 INSERT INTO public.expert_profiles (profile_id, bio, specialties, phone_number, hourly_rate, created_at)
 VALUES (
-  '0ece4fef-48d5-4dd2-b009-89b41083ddeb',
-  'Soy María Rodríguez, farmacéutica especializada en cosmética natural con más de 10 años de experiencia. Mi pasión es enseñar a las personas a crear sus propios productos de belleza utilizando ingredientes naturales y sostenibles.
-
-He trabajado con laboratorios de cosmética orgánica en España y Bolivia, y actualmente dirijo mi propio taller de formulación botánica. Me especializo en jabones artesanales, cremas faciales y tratamientos capilares naturales.
-
-Ofrezco consultorías personalizadas para emprendedores que desean iniciar su línea de cosméticos naturales, así como asesoría en formulación y certificaciones orgánicas. Mis servicios incluyen desarrollo de recetas, análisis de ingredientes y estrategias de comercialización.',
-  ARRAY['Jabones artesanales', 'Cremas faciales naturales', 'Cosmética botánica', 'Formulación orgánica', 'Tratamientos capilares'],
-  '+591 70123456',
-  35.00,
-  NOW() - INTERVAL '30 days'
-);
-
--- Experto 2: Juan Pérez - Consultor en emprendimientos eco-friendly
-INSERT INTO public.expert_profiles (profile_id, bio, specialties, phone_number, hourly_rate, created_at)
-VALUES (
-  '441a923b-01e5-4271-ab52-fee115c469b2',
+  '1833bf95-e986-40ea-ad6d-fe554c1d0382',
   'Hola, soy Juan Pérez, ingeniero ambiental y emprendedor en el sector de productos eco-friendly. Llevo 8 años ayudando a personas y empresas a desarrollar líneas de cosméticos sostenibles y rentables.
 
 Mi experiencia incluye la creación de tres marcas de cosmética natural desde cero, con presencia en tiendas físicas y plataformas digitales. Me especializo en la parte empresarial: desde la formulación inicial hasta el marketing y las ventas.
@@ -877,27 +861,32 @@ También dicto talleres presenciales en La Paz sobre elaboración de productos d
 RESUMEN COMPLETO DE DATA DE PRUEBA
 ==================================
 
-TUTORIALES: 4 tutoriales publicados
-- Tutorial 1: Jabón de lavanda (Usuario 0ece4fef)
-- Tutorial 2: Crema facial (Usuario 0ece4fef)
-- Tutorial 3: Shampoo sólido (Usuario 441a923b)
-- Tutorial 4: Bálsamo labial (Usuario 0ece4fef)
+TUTORIALES: 6 tutoriales publicados
+- Todos creados por Usuario 441a923b (Experto: Juan Pérez)
+- Tutorial 1: Jabón de lavanda
+- Tutorial 2: Crema facial
+- Tutorial 3: Champú sólido
+- Tutorial 4: Desodorante natural
+- Tutorial 5: Bálsamo labial
+- Tutorial 6: Exfoliante corporal
 
-PUBLICACIONES COMUNIDAD: 4 posts + 3 comentarios
-- Post 1: "Mis primeros jabones" (Usuario 0ece4fef)
-  - Comentario de Usuario 441a923b
-- Post 2: "Ayuda con manteca de karité" (Usuario 441a923b)
-  - Comentario de Usuario 0ece4fef
-- Post 3: "Nueva receta de crema" (Usuario 0ece4fef)
-  - Sin comentarios
-- Post 4: "Duda sobre aceites esenciales" (Usuario 441a923b)
-  - Comentario de Usuario 0ece4fef
+PUBLICACIONES COMUNIDAD: 5 posts con varios comentarios
+- Post 1: Pregunta sobre jojoba (Usuario 0ece4fef - Novice)
+  - Comentario de Usuario 441a923b (Experto)
+- Post 2: Jabones exitosos (Usuario 441a923b - Experto)
+  - Comentario de Usuario 0ece4fef (Novice)
+- Post 3: Consejo de almacenamiento (Usuario 441a923b - Experto)
+  - Comentario de Usuario 0ece4fef (Novice)
+- Post 4: Experiencia con tutorial (Usuario 0ece4fef - Novice)
+- Post 5: Problema con crema (Usuario 0ece4fef - Novice)
+  - Comentarios de Usuario 441a923b (Experto)
 
 CURSOS: 4 cursos
-- Curso 1: "Introducción a los Jabones Artesanales" - $49.99 (PUBLICADO)
-- Curso 2: "Cremas Faciales Naturales Avanzadas" - $79.99 (PUBLICADO)
-- Curso 3: "Perfumería Natural: Crea tus propios perfumes" - $99.99 (PUBLICADO)
-- Curso 4: "Shampoos Sólidos Profesionales" - $89.99 (NO PUBLICADO - BORRADOR)
+- Todos creados por Usuario 441a923b (Experto: Juan Pérez)
+- Curso 1: "Introducción a la Cosmética Natural" - $49.99 (PUBLICADO)
+- Curso 2: "Jabones Artesanales: De Principiante a Experto" - $79.99 (PUBLICADO)
+- Curso 3: "Formulación de Cremas y Lociones Profesionales" - $89.99 (PUBLICADO)
+- Curso 4: "Productos Capilares Naturales" - $69.99 (NO PUBLICADO - BORRADOR)
 
 LECCIONES: 8 lecciones distribuidas en los cursos publicados
 - Curso 1: 3 lecciones
@@ -906,17 +895,18 @@ LECCIONES: 8 lecciones distribuidas en los cursos publicados
 - Curso 4: 0 lecciones (en borrador)
 
 INSCRIPCIONES: 2 inscripciones
-- Usuario 441a923b inscrito en Curso 1 y Curso 2
+- Usuario 0ece4fef (Novice) inscrito en Curso 1 y Curso 2
 
-PERFILES DE EXPERTOS: 2 expertos
-- Experto 1: María Rodríguez (Usuario 0ece4fef)
-  - Especialidades: Jabones, Cremas faciales, Cosmética botánica, Formulación orgánica, Tratamientos capilares
-  - Tarifa: $35/hora
-  - WhatsApp: +591 70123456
-- Experto 2: Juan Pérez (Usuario 441a923b)
+PERFILES DE EXPERTOS: 1 experto
+- Experto: Juan Pérez (Usuario 441a923b)
   - Especialidades: Emprendimientos eco-friendly, Plan de negocios, Marketing, Productos de limpieza, Perfumería, Certificaciones
   - Tarifa: $40/hora
   - WhatsApp: +591 71234567
+
+USUARIOS NOVICE: 1 usuario
+- Novice: Usuario 0ece4fef
+  - Rol: Usuario común (sin perfil de experto)
+  - Actividades: Consume tutoriales, cursos, participa en comunidad
 
 ¡Tu MVP está completo con data de prueba realista para todos los features!
 */

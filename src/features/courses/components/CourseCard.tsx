@@ -76,7 +76,18 @@ export function CourseCard({
               </Button>
             </Link>
           </>
+        ) : course.is_enrolled ? (
+          // Usuario inscrito: solo botón "Ver contenido" ocupando todo el espacio
+          <Link to={`/courses/${course.id}`} className="w-full">
+            <Button color="blue" className="w-full">
+              <div className="flex items-center justify-center gap-2">
+                <HiBookOpen className="h-5 w-5" />
+                <span>Ver contenido</span>
+              </div>
+            </Button>
+          </Link>
         ) : (
+          // Usuario NO inscrito: botones "Ver detalles" y "Comprar"
           <>
             <Link to={`/courses/${course.id}`} className="flex-1">
               <Button color="gray" className="w-full">
@@ -84,16 +95,7 @@ export function CourseCard({
               </Button>
             </Link>
 
-            {course.is_enrolled ? (
-              <Link to={`/courses/${course.id}`} className="flex-1">
-                <Button color="blue" className="w-full">
-                  <div className="flex items-center gap-2">
-                    <HiBookOpen className="h-4 w-4" />
-                    <span>Ver contenido</span>
-                  </div>
-                </Button>
-              </Link>
-            ) : onEnroll ? (
+            {onEnroll ? (
               <Button
                 color="green"
                 onClick={() => onEnroll(course.id)}
