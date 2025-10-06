@@ -103,7 +103,7 @@ export function CourseDetailPage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-xl text-red-600">{error}</p>
+          <p className="text-danger-600 text-xl">{error}</p>
           <Button className="mt-4" onClick={() => navigate("/courses")}>
             Volver al catálogo
           </Button>
@@ -124,7 +124,7 @@ export function CourseDetailPage() {
           <div className="mx-auto max-w-4xl">
             {/* Header del curso */}
             <div className="rounded-lg bg-white p-8 shadow-md">
-              <Badge color="success" className="mb-4 w-fit">
+              <Badge className="bg-primary-100 text-primary-800 mb-4 w-fit">
                 Curso Premium
               </Badge>
 
@@ -161,7 +161,7 @@ export function CourseDetailPage() {
               {/* Botón de inscripción */}
               <div className="mt-8">
                 {error && (
-                  <div className="mb-4 rounded-lg bg-red-50 p-4 text-red-800">
+                  <div className="bg-danger-50 text-danger-800 mb-4 rounded-lg p-4">
                     {error}
                   </div>
                 )}
@@ -184,7 +184,10 @@ export function CourseDetailPage() {
 
             {/* Botón para volver */}
             <div className="mt-6">
-              <Button color="gray" onClick={() => navigate("/courses")}>
+              <Button
+                className="bg-secondary-600 hover:bg-secondary-700 text-white"
+                onClick={() => navigate("/courses")}
+              >
                 ← Volver al catálogo
               </Button>
             </div>

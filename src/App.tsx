@@ -5,6 +5,7 @@ import { ProfilePage } from "./features/security/pages/ProfilePage";
 import { AuthCallbackPage } from "./features/security/pages/AuthCallbackPage";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import { ExpertRoute } from "./shared/components/ExpertRoute";
+import { HomePage } from "./features/home/pages/HomePage";
 import { TutorialsListPage } from "./features/tutorials/pages/TutorialsListPage";
 import { TutorialDetailPage } from "./features/tutorials/pages/TutorialDetailPage";
 import { CreateTutorialPage } from "./features/tutorials/pages/CreateTutorialPage";
@@ -22,21 +23,24 @@ import { ExpertsDirectoryPage } from "./features/experts/pages/ExpertsDirectoryP
 import { ExpertProfilePage } from "./features/experts/pages/ExpertProfilePage";
 import { EditExpertProfilePage } from "./features/experts/pages/EditExpertProfilePage";
 import { Header } from "./shared/components/Header";
+import { Footer } from "./shared/components/Footer";
 
 export default function App() {
   const location = useLocation();
 
-  // Páginas que no deben mostrar el Header
-  const hideHeaderPaths = ["/login", "/register", "/auth/callback"];
-  const shouldShowHeader = !hideHeaderPaths.includes(location.pathname);
+  // Solo AuthCallback no debe mostrar el Header y Footer
+  const hideHeaderFooterPaths = ["/auth/callback"];
+  const shouldShowHeaderFooter = !hideHeaderFooterPaths.includes(
+    location.pathname,
+  );
 
   return (
     <>
-      {shouldShowHeader && <Header />}
+      {shouldShowHeaderFooter && <Header />}
 
       <Routes>
-        {/* Ruta principal redirige a comunidad */}
-        <Route path="/" element={<Navigate to="/community" replace />} />
+        {/* Ruta principal - Landing Page */}
+        <Route path="/" element={<HomePage />} />
 
         {/* Rutas públicas de autenticación */}
         <Route path="/login" element={<LoginPage />} />
@@ -134,8 +138,10 @@ export default function App() {
         />
 
         {/* Ruta 404 */}
-        <Route path="*" element={<Navigate to="/community" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {shouldShowHeaderFooter && <Footer />}
     </>
   );
 }

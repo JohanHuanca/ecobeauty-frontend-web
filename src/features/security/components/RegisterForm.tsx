@@ -99,15 +99,23 @@ export function RegisterForm({
     <div className="w-full">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {error && (
-          <Alert color="failure" onDismiss={() => setError(null)}>
-            <span className="font-medium">Error:</span> {error}
+          <Alert
+            className="bg-danger-50 border-danger-200"
+            onDismiss={() => setError(null)}
+          >
+            <span className="text-danger-800 font-medium">Error:</span>{" "}
+            <span className="text-danger-700">{error}</span>
           </Alert>
         )}
 
         {success && (
-          <Alert color="success">
-            <span className="font-medium">¡Registro exitoso!</span> Ahora puedes
-            iniciar sesión.
+          <Alert className="bg-primary-50 border-primary-200">
+            <span className="text-primary-800 font-medium">
+              ¡Registro exitoso!
+            </span>{" "}
+            <span className="text-primary-700">
+              Ahora puedes iniciar sesión.
+            </span>
           </Alert>
         )}
 

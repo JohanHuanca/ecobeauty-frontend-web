@@ -184,7 +184,7 @@ export function ManageCoursePage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-xl text-red-600">
+          <p className="text-danger-600 text-xl">
             {error || "Curso no encontrado"}
           </p>
           <Button
@@ -220,7 +220,13 @@ export function ManageCoursePage() {
                 <h1 className="text-3xl font-bold text-gray-900">
                   {course.title}
                 </h1>
-                <Badge color={course.is_published ? "success" : "warning"}>
+                <Badge
+                  className={
+                    course.is_published
+                      ? "bg-primary-100 text-primary-800"
+                      : "bg-accent-100 text-accent-800"
+                  }
+                >
                   {course.is_published ? "Publicado" : "Borrador"}
                 </Badge>
               </div>
@@ -232,7 +238,7 @@ export function ManageCoursePage() {
 
             <div className="flex gap-2">
               <Button
-                color="success"
+                className="bg-primary-600 hover:bg-primary-700 text-white"
                 onClick={() => setShowEditCourseModal(true)}
               >
                 <div className="flex items-center gap-2">
@@ -241,7 +247,11 @@ export function ManageCoursePage() {
                 </div>
               </Button>
               <Button
-                color={course.is_published ? "warning" : "success"}
+                className={
+                  course.is_published
+                    ? "bg-accent-600 hover:bg-accent-700 text-white"
+                    : "bg-primary-600 hover:bg-primary-700 text-white"
+                }
                 onClick={handleTogglePublish}
               >
                 <div className="flex items-center gap-2">
@@ -276,7 +286,10 @@ export function ManageCoursePage() {
               <HiBookOpen className="h-6 w-6" />
               <span>Lecciones</span>
             </h2>
-            <Button color="success" onClick={() => setShowAddLessonModal(true)}>
+            <Button
+              className="bg-primary-600 hover:bg-primary-700 text-white"
+              onClick={() => setShowAddLessonModal(true)}
+            >
               <div className="flex items-center gap-2">
                 <HiPlus className="h-4 w-4" />
                 <span>Agregar lección</span>

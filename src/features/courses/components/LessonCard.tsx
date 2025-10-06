@@ -74,7 +74,7 @@ export function LessonCard({
               </span>
             )}
             {lesson.video_url && (
-              <span className="inline-flex items-center rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+              <span className="bg-accent-100 text-accent-800 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium">
                 🎥 Video
               </span>
             )}
@@ -107,7 +107,7 @@ export function LessonCard({
             {onEdit && (
               <Button
                 size="xs"
-                color="success"
+                className="bg-primary-600 hover:bg-primary-700 text-white"
                 onClick={(e) => {
                   e.stopPropagation();
                   onEdit(lesson);
@@ -119,7 +119,7 @@ export function LessonCard({
             {onDelete && (
               <Button
                 size="xs"
-                color="failure"
+                className="bg-danger-600 hover:bg-danger-700 text-white"
                 onClick={(e) => {
                   e.stopPropagation();
                   if (

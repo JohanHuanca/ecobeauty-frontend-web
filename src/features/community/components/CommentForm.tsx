@@ -28,7 +28,12 @@ export function CommentForm({ onSubmit, isLoading = false }: CommentFormProps) {
         required
       />
       <div className="flex justify-end">
-        <Button type="submit" size="sm" disabled={isLoading || !content.trim()}>
+        <Button
+          type="submit"
+          size="sm"
+          disabled={isLoading || !content.trim()}
+          className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
+        >
           {isLoading ? "Enviando..." : "Comentar"}
         </Button>
       </div>

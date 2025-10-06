@@ -92,7 +92,7 @@ export function CommentItem({
                 <div className="mt-2 flex justify-end gap-2">
                   <Button
                     size="sm"
-                    color="gray"
+                    className="bg-secondary-600 hover:bg-secondary-700 text-white"
                     onClick={() => {
                       setIsReplying(false);
                       setReplyContent("");
@@ -105,6 +105,7 @@ export function CommentItem({
                     size="sm"
                     onClick={handleSubmitReply}
                     disabled={isSubmitting || !replyContent.trim()}
+                    className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
                   >
                     {isSubmitting ? "Publicando..." : "Publicar"}
                   </Button>

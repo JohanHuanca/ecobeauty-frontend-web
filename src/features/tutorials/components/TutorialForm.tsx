@@ -70,7 +70,11 @@ export function TutorialForm({
         </p>
       </div>
 
-      <Button type="submit" disabled={isLoading}>
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
+      >
         {isLoading ? "Publicando..." : "Publicar tutorial"}
       </Button>
     </form>

@@ -21,7 +21,13 @@ export function CourseCard({
       {/* Estado de publicación (solo para expertos) */}
       {showManageButton && (
         <div className="flex items-start justify-between">
-          <Badge color={course.is_published ? "success" : "warning"}>
+          <Badge
+            className={
+              course.is_published
+                ? "bg-primary-100 text-primary-800"
+                : "bg-accent-100 text-accent-800"
+            }
+          >
             {course.is_published ? "Publicado" : "Borrador"}
           </Badge>
         </div>
@@ -68,7 +74,7 @@ export function CourseCard({
         {showManageButton ? (
           <>
             <Link to={`/courses/manage/${course.id}`} className="flex-1">
-              <Button color="success" className="w-full">
+              <Button className="bg-primary-600 hover:bg-primary-700 w-full text-white">
                 <div className="flex items-center gap-2">
                   <HiCog className="h-4 w-4" />
                   <span>Gestionar</span>
@@ -79,7 +85,7 @@ export function CourseCard({
         ) : course.is_enrolled ? (
           // Usuario inscrito: solo botón "Ver contenido" ocupando todo el espacio
           <Link to={`/courses/${course.id}`} className="w-full">
-            <Button color="success" className="w-full">
+            <Button className="bg-primary-600 hover:bg-primary-700 w-full text-white">
               <div className="flex items-center justify-center gap-2">
                 <HiBookOpen className="h-5 w-5" />
                 <span>Ver contenido</span>
@@ -90,17 +96,16 @@ export function CourseCard({
           // Usuario NO inscrito: botones "Ver detalles" y "Comprar"
           <>
             <Link to={`/courses/${course.id}`} className="flex-1">
-              <Button color="gray" className="w-full">
+              <Button className="bg-secondary-600 hover:bg-secondary-700 w-full text-white">
                 Ver detalles
               </Button>
             </Link>
 
             {onEnroll ? (
               <Button
-                color="success"
                 onClick={() => onEnroll(course.id)}
                 disabled={enrolling}
-                className="flex-1"
+                className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 flex-1 text-white"
               >
                 {enrolling ? "Comprando..." : "💳 Comprar"}
               </Button>

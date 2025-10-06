@@ -93,7 +93,7 @@ export function PostForm({ onSubmit, isLoading = false }: PostFormProps) {
           <button
             type="button"
             onClick={handleRemoveImage}
-            className="absolute top-2 right-2 rounded-full bg-red-500 p-2 text-white hover:bg-red-600"
+            className="bg-danger-500 hover:bg-danger-600 absolute top-2 right-2 rounded-full p-2 text-white"
             disabled={isLoading}
           >
             <svg
@@ -113,7 +113,11 @@ export function PostForm({ onSubmit, isLoading = false }: PostFormProps) {
         </div>
       )}
 
-      <Button type="submit" disabled={isLoading}>
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
+      >
         {isLoading ? "Publicando..." : "Publicar"}
       </Button>
     </form>

@@ -68,7 +68,7 @@ export function LessonForm({
       {/* Título */}
       <div>
         <Label htmlFor="title">
-          Título de la lección <span className="text-red-500">*</span>
+          Título de la lección <span className="text-danger-500">*</span>
         </Label>
         <TextInput
           id="title"
@@ -84,7 +84,7 @@ export function LessonForm({
       {/* Orden */}
       <div>
         <Label htmlFor="order">
-          Orden <span className="text-red-500">*</span>
+          Orden <span className="text-danger-500">*</span>
         </Label>
         <TextInput
           id="order"
@@ -140,22 +140,26 @@ export function LessonForm({
 
       {/* Mensaje de error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        <div className="bg-danger-50 text-danger-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
 
       {/* Botones */}
       <div className="flex gap-2">
-        <Button type="submit" disabled={isSubmitting} className="flex-1">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 flex-1 text-white"
+        >
           {isSubmitting ? "Guardando..." : submitLabel}
         </Button>
         {onCancel && (
           <Button
             type="button"
-            color="gray"
             onClick={onCancel}
             disabled={isSubmitting}
+            className="bg-secondary-600 hover:bg-secondary-700 disabled:bg-secondary-400 text-white"
           >
             Cancelar
           </Button>

@@ -88,7 +88,11 @@ export function Header() {
           className="flex items-center space-x-3"
           onClick={() => setIsMenuOpen(false)}
         >
-          <GiFlowerPot className="text-primary-600 h-8 w-8" />
+          <img
+            src="/ecobeauty.png"
+            alt="EcoBeauty Logo"
+            className="h-8 w-8 object-contain"
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-900">
             EcoBeauty
           </span>
@@ -209,12 +213,20 @@ export function Header() {
           ) : (
             <>
               <Link to="/login">
-                <Button color="gray" size="sm">
+                <Button
+                  size="sm"
+                  className="bg-secondary-600 hover:bg-secondary-700 text-white"
+                >
                   Iniciar sesión
                 </Button>
               </Link>
               <Link to="/register">
-                <Button size="sm">Registrarse</Button>
+                <Button
+                  size="sm"
+                  className="bg-primary-600 hover:bg-primary-700 text-white"
+                >
+                  Registrarse
+                </Button>
               </Link>
             </>
           )}

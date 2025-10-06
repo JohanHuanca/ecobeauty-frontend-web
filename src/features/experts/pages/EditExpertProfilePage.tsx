@@ -99,8 +99,8 @@ export function EditExpertProfilePage() {
   if (error) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <div className="rounded-lg bg-red-50 p-8 text-center">
-          <p className="text-red-800">{error}</p>
+        <div className="bg-danger-50 rounded-lg p-8 text-center">
+          <p className="text-danger-800">{error}</p>
         </div>
       </div>
     );

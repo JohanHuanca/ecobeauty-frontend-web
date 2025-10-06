@@ -55,7 +55,10 @@ export function MyCreatedTutorialsPage() {
               comunidad
             </p>
           </div>
-          <Button color="success" onClick={() => navigate("/tutorials/create")}>
+          <Button
+            onClick={() => navigate("/tutorials/create")}
+            className="bg-primary-600 hover:bg-primary-700 text-white"
+          >
             <div className="flex items-center gap-2">
               <HiPlus className="h-5 w-5" />
               <span>Crear nuevo tutorial</span>
@@ -65,8 +68,8 @@ export function MyCreatedTutorialsPage() {
 
         {/* Error */}
         {error && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
-            <p className="text-red-800">{error}</p>
+          <div className="border-danger-200 bg-danger-50 mb-6 rounded-lg border p-4">
+            <p className="text-danger-800">{error}</p>
           </div>
         )}
 
@@ -81,8 +84,7 @@ export function MyCreatedTutorialsPage() {
               ¡Comienza a compartir tu conocimiento creando tu primer tutorial!
             </p>
             <Button
-              className="mt-6"
-              color="success"
+              className="bg-primary-600 hover:bg-primary-700 mt-6 text-white"
               onClick={() => navigate("/tutorials/create")}
             >
               <div className="flex items-center gap-2">

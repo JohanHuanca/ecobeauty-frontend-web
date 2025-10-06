@@ -41,8 +41,8 @@ export function CommunityFeedPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-          <p className="text-red-800">{error}</p>
+        <div className="border-danger-200 bg-danger-50 rounded-lg border p-4">
+          <p className="text-danger-800">{error}</p>
         </div>
       </div>
     );
@@ -64,7 +64,7 @@ export function CommunityFeedPage() {
           </div>
           {session && (
             <Link to="/community/create">
-              <Button>
+              <Button className="bg-primary-600 hover:bg-primary-700 text-white">
                 <svg
                   className="mr-2 h-5 w-5"
                   fill="none"
@@ -109,7 +109,9 @@ export function CommunityFeedPage() {
             </p>
             {session && (
               <Link to="/community/create">
-                <Button>Crear primera publicación</Button>
+                <Button className="bg-primary-600 hover:bg-primary-700 text-white">
+                  Crear primera publicación
+                </Button>
               </Link>
             )}
           </div>

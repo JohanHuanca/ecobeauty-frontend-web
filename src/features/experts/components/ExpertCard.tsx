@@ -38,7 +38,7 @@ export function ExpertCard({ expert }: ExpertCardProps) {
             </p>
             <div className="flex flex-wrap gap-2">
               {expert.specialties.slice(0, 3).map((specialty, index) => (
-                <Badge key={index} color="success">
+                <Badge key={index} className="bg-primary-100 text-primary-800">
                   {specialty}
                 </Badge>
               ))}

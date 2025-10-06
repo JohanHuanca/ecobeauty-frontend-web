@@ -29,17 +29,29 @@
   --color-secondary-800: #1f2937;
   --color-secondary-900: #111827;
 
-  /* Color de acento para elementos especiales - Tonos verdes/amarillos */
-  --color-accent-50: #fefce8;
-  --color-accent-100: #fef9c3;
-  --color-accent-200: #fef08a;
-  --color-accent-300: #fde047;
-  --color-accent-400: #facc15;
-  --color-accent-500: #eab308;
-  --color-accent-600: #ca8a04;
-  --color-accent-700: #a16207;
-  --color-accent-800: #854d0e;
-  --color-accent-900: #713f12;
+  /* Color de acento para elementos especiales - Amarillo (Amber) */
+  --color-accent-50: #fdfdea;
+  --color-accent-100: #fdf6b2;
+  --color-accent-200: #fce96a;
+  --color-accent-300: #faca15;
+  --color-accent-400: #e3a008;
+  --color-accent-500: #c27803;
+  --color-accent-600: #9f580a;
+  --color-accent-700: #8e4b10;
+  --color-accent-800: #723b13;
+  --color-accent-900: #633112;
+
+  /* Color de peligro para errores y acciones destructivas - Rojo (Red) */
+  --color-danger-50: #fdf2f2;
+  --color-danger-100: #fde8e8;
+  --color-danger-200: #fbd5d5;
+  --color-danger-300: #f8b4b4;
+  --color-danger-400: #f98080;
+  --color-danger-500: #f05252;
+  --color-danger-600: #e02424;
+  --color-danger-700: #c81e1e;
+  --color-danger-800: #9b1c1c;
+  --color-danger-900: #771d1d;
 
   /* Fuentes - 3 categorías principales */
 

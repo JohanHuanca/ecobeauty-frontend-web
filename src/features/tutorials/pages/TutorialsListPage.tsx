@@ -39,8 +39,8 @@ export function TutorialsListPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-          <p className="text-red-800">{error}</p>
+        <div className="border-danger-200 bg-danger-50 rounded-lg border p-4">
+          <p className="text-danger-800">{error}</p>
         </div>
       </div>
     );

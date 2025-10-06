@@ -84,7 +84,7 @@ export function ExpertsDirectoryPage() {
 
         {/* Mensaje de error */}
         {error && (
-          <div className="rounded-lg bg-red-50 p-4 text-center text-red-800">
+          <div className="bg-danger-50 text-danger-800 rounded-lg p-4 text-center">
             {error}
           </div>
         )}

@@ -269,12 +269,15 @@ export function ProfilePage() {
             {/* Badges de roles */}
             <div className="flex gap-2">
               {isExpert && (
-                <Badge color="success" size="sm">
+                <Badge className="bg-primary-100 text-primary-800" size="sm">
                   Experto
                 </Badge>
               )}
               {isNovice && (
-                <Badge color="info" size="sm">
+                <Badge
+                  className="bg-secondary-100 text-secondary-800"
+                  size="sm"
+                >
                   Principiante
                 </Badge>
               )}
@@ -284,21 +287,21 @@ export function ProfilePage() {
           <div className="mt-6 border-t pt-6">
             {error && (
               <Alert
-                color="failure"
-                className="mb-4"
+                className="bg-danger-50 border-danger-200 mb-4"
                 onDismiss={() => setError(null)}
               >
-                <span className="font-medium">Error:</span> {error}
+                <span className="text-danger-800 font-medium">Error:</span>{" "}
+                <span className="text-danger-700">{error}</span>
               </Alert>
             )}
 
             {success && (
               <Alert
-                color="success"
-                className="mb-4"
+                className="bg-primary-50 border-primary-200 mb-4"
                 onDismiss={() => setSuccess(null)}
               >
-                <span className="font-medium">¡Éxito!</span> {success}
+                <span className="text-primary-800 font-medium">¡Éxito!</span>{" "}
+                <span className="text-primary-700">{success}</span>
               </Alert>
             )}
 
@@ -323,15 +326,14 @@ export function ProfilePage() {
                   <Button
                     onClick={handleSaveProfile}
                     disabled={loading}
-                    className="flex-1"
+                    className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 flex-1 text-white"
                   >
                     {loading ? "Guardando..." : "Guardar"}
                   </Button>
                   <Button
-                    color="gray"
                     onClick={handleEditToggle}
                     disabled={loading}
-                    className="flex-1"
+                    className="bg-secondary-600 hover:bg-secondary-700 flex-1 text-white"
                   >
                     Cancelar
                   </Button>
@@ -359,7 +361,10 @@ export function ProfilePage() {
                   </div>
                 </div>
 
-                <Button onClick={handleEditToggle} color="success">
+                <Button
+                  onClick={handleEditToggle}
+                  className="bg-primary-600 hover:bg-primary-700 text-white"
+                >
                   Editar perfil
                 </Button>
               </div>
@@ -431,10 +436,9 @@ export function ProfilePage() {
 
           <div className="mt-6 border-t pt-6">
             <Button
-              color="failure"
               onClick={handleLogout}
               disabled={loading}
-              className="w-full"
+              className="bg-danger-600 hover:bg-danger-700 disabled:bg-secondary-400 w-full text-white"
             >
               <HiLogout className="mr-2 h-5 w-5" />
               Cerrar sesión
@@ -473,15 +477,14 @@ export function ProfilePage() {
                 <Button
                   onClick={handleBecomeExpert}
                   disabled={becomingExpert}
-                  className="bg-secondary-600 hover:bg-secondary-700 flex-1"
+                  className="bg-secondary-600 hover:bg-secondary-700 disabled:bg-secondary-400 flex-1 text-white"
                 >
                   {becomingExpert ? "Procesando..." : "Confirmar"}
                 </Button>
                 <Button
-                  color="gray"
                   onClick={() => setShowBecomeExpertModal(false)}
                   disabled={becomingExpert}
-                  className="flex-1"
+                  className="bg-secondary-600 hover:bg-secondary-700 flex-1 text-white"
                 >
                   Cancelar
                 </Button>

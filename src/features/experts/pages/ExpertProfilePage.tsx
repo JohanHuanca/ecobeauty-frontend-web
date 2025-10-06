@@ -59,8 +59,8 @@ export function ExpertProfilePage() {
   if (error || !expert) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <div className="rounded-lg bg-red-50 p-8 text-center">
-          <p className="text-red-800">
+        <div className="bg-danger-50 rounded-lg p-8 text-center">
+          <p className="text-danger-800">
             {error || "No se encontró el perfil del experto"}
           </p>
           <Link
@@ -116,9 +116,8 @@ export function ExpertProfilePage() {
 
                 {/* Botón de WhatsApp */}
                 <Button
-                  color="success"
                   size="lg"
-                  className="w-full"
+                  className="bg-primary-600 hover:bg-primary-700 w-full text-white"
                   onClick={handleContactWhatsApp}
                 >
                   <svg
@@ -149,7 +148,11 @@ export function ExpertProfilePage() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {expert.specialties?.map((specialty, index) => (
-                    <Badge key={index} color="success" size="lg">
+                    <Badge
+                      key={index}
+                      size="lg"
+                      className="bg-primary-100 text-primary-800"
+                    >
                       {specialty}
                     </Badge>
                   )) || (

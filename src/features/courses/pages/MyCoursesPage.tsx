@@ -61,7 +61,7 @@ export function MyCoursesPage() {
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800">
+          <div className="bg-danger-50 text-danger-800 mb-6 rounded-lg p-4">
             {error}
           </div>
         )}
@@ -75,7 +75,10 @@ export function MyCoursesPage() {
             <p className="mt-2 text-gray-400">
               ¡Explora nuestro catálogo y comienza a aprender!
             </p>
-            <Button className="mt-6" onClick={() => navigate("/courses")}>
+            <Button
+              className="bg-primary-600 hover:bg-primary-700 mt-6 text-white"
+              onClick={() => navigate("/courses")}
+            >
               Ver catálogo de cursos
             </Button>
           </div>

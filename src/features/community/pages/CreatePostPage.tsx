@@ -55,8 +55,8 @@ export function CreatePostPage() {
           </p>
 
           {error && (
-            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
-              <p className="text-red-800">{error}</p>
+            <div className="border-danger-200 bg-danger-50 mb-6 rounded-lg border p-4">
+              <p className="text-danger-800">{error}</p>
             </div>
           )}
 

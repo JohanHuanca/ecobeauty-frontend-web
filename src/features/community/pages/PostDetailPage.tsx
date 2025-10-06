@@ -81,11 +81,15 @@ export function PostDetailPage() {
   if (error || !post) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4">
-          <p className="text-red-800">{error || "Publicación no encontrada"}</p>
+        <div className="border-danger-200 bg-danger-50 mb-4 rounded-lg border p-4">
+          <p className="text-danger-800">
+            {error || "Publicación no encontrada"}
+          </p>
         </div>
         <Link to="/community">
-          <Button color="gray">Volver a la comunidad</Button>
+          <Button className="bg-secondary-600 hover:bg-secondary-700 text-white">
+            Volver a la comunidad
+          </Button>
         </Link>
       </div>
     );

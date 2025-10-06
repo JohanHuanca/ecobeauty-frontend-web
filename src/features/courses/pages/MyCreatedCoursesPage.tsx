@@ -65,7 +65,10 @@ export function MyCreatedCoursesPage() {
             </p>
           </div>
 
-          <Button color="success" onClick={() => navigate("/courses/create")}>
+          <Button
+            className="bg-primary-600 hover:bg-primary-700 text-white"
+            onClick={() => navigate("/courses/create")}
+          >
             <HiPlus className="mr-2 h-5 w-5" />
             Crear nuevo curso
           </Button>
@@ -73,7 +76,7 @@ export function MyCreatedCoursesPage() {
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800">
+          <div className="bg-danger-50 text-danger-800 mb-6 rounded-lg p-4">
             {error}
           </div>
         )}

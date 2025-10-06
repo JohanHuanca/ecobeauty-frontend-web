@@ -96,7 +96,7 @@ export function CourseCatalogPage() {
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800">
+          <div className="bg-danger-50 text-danger-800 mb-6 rounded-lg p-4">
             {error}
           </div>
         )}

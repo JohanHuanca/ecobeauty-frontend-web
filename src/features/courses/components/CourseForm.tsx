@@ -62,7 +62,7 @@ export function CourseForm({
       {/* Título */}
       <div>
         <Label htmlFor="title">
-          Título del curso <span className="text-red-500">*</span>
+          Título del curso <span className="text-danger-500">*</span>
         </Label>
         <TextInput
           id="title"
@@ -93,7 +93,7 @@ export function CourseForm({
       {/* Precio */}
       <div>
         <Label htmlFor="price">
-          Precio (USD) <span className="text-red-500">*</span>
+          Precio (USD) <span className="text-danger-500">*</span>
         </Label>
         <TextInput
           id="price"
@@ -115,13 +115,17 @@ export function CourseForm({
 
       {/* Mensaje de error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        <div className="bg-danger-50 text-danger-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
 
       {/* Botón de envío */}
-      <Button type="submit" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
+      >
         {isSubmitting ? "Guardando..." : submitLabel}
       </Button>
     </form>

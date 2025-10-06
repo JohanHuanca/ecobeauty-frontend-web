@@ -184,12 +184,12 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
                   <div className="mt-2 flex justify-end gap-2">
                     <Button
                       size="sm"
-                      color="gray"
                       onClick={() => {
                         setReplyTo(null);
                         setReplyContent("");
                       }}
                       disabled={isSubmitting}
+                      className="bg-secondary-600 hover:bg-secondary-700 text-white"
                     >
                       Cancelar
                     </Button>
@@ -197,6 +197,7 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
                       size="sm"
                       onClick={() => handleSubmitReply(comment.id)}
                       disabled={isSubmitting || !replyContent.trim()}
+                      className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
                     >
                       {isSubmitting ? "Publicando..." : "Publicar"}
                     </Button>
@@ -241,13 +242,19 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
           </div>
 
           {error && (
-            <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
-              {error}
+            <div className="bg-danger-50 border-danger-200 mb-4 rounded-lg border p-3">
+              <span className="text-danger-800 text-sm font-medium">
+                {error}
+              </span>
             </div>
           )}
 
           <div className="flex justify-end">
-            <Button type="submit" disabled={isSubmitting || !newComment.trim()}>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !newComment.trim()}
+              className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
+            >
               {isSubmitting ? "Publicando..." : "Publicar comentario"}
             </Button>
           </div>

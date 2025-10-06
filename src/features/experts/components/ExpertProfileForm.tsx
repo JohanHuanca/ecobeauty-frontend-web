@@ -93,7 +93,7 @@ export function ExpertProfileForm({
       {/* Biografía */}
       <div>
         <Label htmlFor="bio">
-          Biografía profesional <span className="text-red-500">*</span>
+          Biografía profesional <span className="text-danger-500">*</span>
         </Label>
         <Textarea
           id="bio"
@@ -112,7 +112,7 @@ export function ExpertProfileForm({
       {/* Especialidades */}
       <div>
         <Label htmlFor="specialty">
-          Especialidades <span className="text-red-500">*</span>
+          Especialidades <span className="text-danger-500">*</span>
         </Label>
         <div className="flex gap-2">
           <TextInput
@@ -134,6 +134,7 @@ export function ExpertProfileForm({
             type="button"
             onClick={handleAddSpecialty}
             disabled={isSubmitting || !specialtyInput.trim()}
+            className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
           >
             Agregar
           </Button>
@@ -165,7 +166,7 @@ export function ExpertProfileForm({
       {/* Número de WhatsApp */}
       <div>
         <Label htmlFor="phone">
-          Número de WhatsApp <span className="text-red-500">*</span>
+          Número de WhatsApp <span className="text-danger-500">*</span>
         </Label>
         <TextInput
           id="phone"
@@ -186,7 +187,7 @@ export function ExpertProfileForm({
       {/* Tarifa por hora */}
       <div>
         <Label htmlFor="rate">
-          Tarifa por hora (USD) <span className="text-red-500">*</span>
+          Tarifa por hora (USD) <span className="text-danger-500">*</span>
         </Label>
         <TextInput
           id="rate"
@@ -211,13 +212,18 @@ export function ExpertProfileForm({
 
       {/* Mensaje de error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        <div className="bg-danger-50 text-danger-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
 
       {/* Botón de envío */}
-      <Button type="submit" disabled={isSubmitting} size="lg">
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        size="lg"
+        className="bg-primary-600 hover:bg-primary-700 disabled:bg-secondary-400 text-white"
+      >
         {isSubmitting ? "Guardando..." : submitLabel}
       </Button>
     </form>

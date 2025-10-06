@@ -79,11 +79,13 @@ export function TutorialDetailPage() {
   if (error || !tutorial) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8">
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4">
-          <p className="text-red-800">{error || "Tutorial no encontrado"}</p>
+        <div className="border-danger-200 bg-danger-50 mb-4 rounded-lg border p-4">
+          <p className="text-danger-800">{error || "Tutorial no encontrado"}</p>
         </div>
         <Link to="/tutorials">
-          <Button color="gray">Volver a tutoriales</Button>
+          <Button className="bg-secondary-600 hover:bg-secondary-700 text-white">
+            Volver a tutoriales
+          </Button>
         </Link>
       </div>
     );
@@ -150,9 +152,13 @@ export function TutorialDetailPage() {
           {/* Botones de interacción */}
           <div className="mt-6 flex items-center gap-4 border-t pt-6">
             <Button
-              color={tutorial.user_has_liked ? "failure" : "gray"}
               onClick={handleLikeToggle}
               disabled={!session || isLiking}
+              className={
+                tutorial.user_has_liked
+                  ? "bg-danger-600 hover:bg-danger-700 text-white"
+                  : "bg-secondary-600 hover:bg-secondary-700 text-white"
+              }
             >
               {tutorial.user_has_liked ? (
                 <HiHeart className="mr-2 h-5 w-5" />

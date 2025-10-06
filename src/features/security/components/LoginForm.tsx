@@ -57,8 +57,12 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
     <div className="w-full">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {error && (
-          <Alert color="failure" onDismiss={() => setError(null)}>
-            <span className="font-medium">Error:</span> {error}
+          <Alert
+            className="bg-danger-50 border-danger-200"
+            onDismiss={() => setError(null)}
+          >
+            <span className="text-danger-800 font-medium">Error:</span>{" "}
+            <span className="text-danger-700">{error}</span>
           </Alert>
         )}
 
@@ -112,10 +116,9 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
       </div>
 
       <Button
-        color="light"
         onClick={handleGoogleLogin}
         disabled={loading}
-        className="w-full"
+        className="w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
       >
         <FcGoogle className="mr-2 h-5 w-5" />
         Continuar con Google
