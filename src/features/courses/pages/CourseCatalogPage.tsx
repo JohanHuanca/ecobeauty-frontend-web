@@ -80,15 +80,15 @@ export function CourseCatalogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="flex items-center gap-3 text-4xl font-bold text-gray-900 dark:text-white">
-            <HiAcademicCap className="h-10 w-10 text-green-600" />
+          <h1 className="flex items-center gap-3 text-4xl font-bold text-gray-900">
+            <HiAcademicCap className="text-primary-600 h-10 w-10" />
             <span>Catálogo de Cursos</span>
           </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-lg text-gray-600">
             Descubre cursos premium creados por nuestros expertos en cosmética
             natural
           </p>
@@ -96,18 +96,18 @@ export function CourseCatalogPage() {
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-gray-800 dark:text-red-400">
+          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800">
             {error}
           </div>
         )}
 
         {/* Grid de cursos */}
         {courses.length === 0 ? (
-          <div className="rounded-lg bg-white p-12 text-center dark:bg-gray-800">
-            <p className="text-xl text-gray-500 dark:text-gray-400">
+          <div className="rounded-lg bg-white p-12 text-center">
+            <p className="text-xl text-gray-500">
               No hay cursos disponibles en este momento.
             </p>
-            <p className="mt-2 text-gray-400 dark:text-gray-500">
+            <p className="mt-2 text-gray-400">
               ¡Vuelve pronto para descubrir nuevos contenidos!
             </p>
           </div>
@@ -125,16 +125,16 @@ export function CourseCatalogPage() {
         )}
 
         {/* Nota sobre cursos gratuitos */}
-        <div className="mt-12 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-gray-800">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-300">
+        <div className="border-primary-200 bg-primary-50 mt-12 rounded-lg border p-6">
+          <h3 className="text-primary-900 flex items-center gap-2 text-lg font-semibold">
             <HiLightBulb className="h-5 w-5" />
             <span>¿Buscas contenido gratuito?</span>
           </h3>
-          <p className="mt-2 text-blue-800 dark:text-blue-400">
+          <p className="text-primary-800 mt-2">
             Explora nuestra sección de{" "}
             <button
               onClick={() => navigate("/tutorials")}
-              className="font-semibold underline hover:text-blue-600"
+              className="hover:text-primary-600 font-semibold underline"
             >
               Tutoriales gratuitos
             </button>{" "}

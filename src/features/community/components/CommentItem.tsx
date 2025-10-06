@@ -47,16 +47,16 @@ export function CommentItem({
           size="sm"
         />
         <div className="min-w-0 flex-1">
-          <div className="rounded-lg bg-gray-100 p-3 dark:bg-gray-700">
-            <p className="mb-1 text-sm font-medium text-gray-900 dark:text-white">
+          <div className="rounded-lg bg-gray-100 p-3">
+            <p className="mb-1 text-sm font-medium text-gray-900">
               {comment.profiles?.full_name || "Usuario"}
             </p>
-            <p className="text-sm whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+            <p className="text-sm whitespace-pre-wrap text-gray-700">
               {comment.content}
             </p>
           </div>
           <div className="mt-1 ml-3 flex items-center gap-4">
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-gray-500">
               {new Date(comment.created_at).toLocaleDateString("es-ES", {
                 year: "numeric",
                 month: "long",
@@ -69,7 +69,7 @@ export function CommentItem({
             {!isReply && isAuthenticated && onReply && (
               <button
                 onClick={() => setIsReplying(!isReplying)}
-                className="flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                className="text-primary-600 hover:text-primary-700 flex items-center gap-1 text-xs font-medium"
               >
                 <HiReply className="h-4 w-4" />
                 {isReplying ? "Cancelar" : "Responder"}

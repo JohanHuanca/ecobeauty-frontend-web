@@ -89,10 +89,8 @@ export function EditExpertProfilePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="py-12 text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-green-500"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
-            Cargando perfil...
-          </p>
+          <div className="border-primary-500 mx-auto h-12 w-12 animate-spin rounded-full border-t-2 border-b-2"></div>
+          <p className="mt-4 text-gray-600">Cargando perfil...</p>
         </div>
       </div>
     );
@@ -101,24 +99,24 @@ export function EditExpertProfilePage() {
   if (error) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <div className="rounded-lg bg-red-50 p-8 text-center dark:bg-gray-800">
-          <p className="text-red-800 dark:text-red-400">{error}</p>
+        <div className="rounded-lg bg-red-50 p-8 text-center">
+          <p className="text-red-800">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto max-w-3xl px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mb-4 text-3xl font-bold text-gray-900">
             {hasProfile
               ? "Editar mi perfil de experto"
               : "Crear perfil de experto"}
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             {hasProfile
               ? "Actualiza tu información profesional para atraer más clientes"
               : "Completa tu perfil para aparecer en el directorio de expertos"}
@@ -135,12 +133,12 @@ export function EditExpertProfilePage() {
         </Card>
 
         {/* Nota informativa */}
-        <div className="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-gray-800">
-          <h3 className="mb-2 flex items-center gap-2 font-semibold text-blue-900 dark:text-blue-300">
+        <div className="bg-primary-50 mt-6 rounded-lg p-4">
+          <h3 className="text-primary-900 mb-2 flex items-center gap-2 font-semibold">
             <HiLightBulb className="h-5 w-5" />
             <span>Consejos para un buen perfil</span>
           </h3>
-          <ul className="list-inside list-disc space-y-1 text-sm text-blue-800 dark:text-blue-400">
+          <ul className="text-primary-800 list-inside list-disc space-y-1 text-sm">
             <li>Escribe una biografía detallada que destaque tu experiencia</li>
             <li>
               Agrega al menos 3 especialidades para mejorar tu visibilidad

@@ -184,7 +184,7 @@ export function ManageCoursePage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-xl text-red-600 dark:text-red-400">
+          <p className="text-xl text-red-600">
             {error || "Curso no encontrado"}
           </p>
           <Button
@@ -202,7 +202,7 @@ export function ManageCoursePage() {
     lessons.length > 0 ? Math.max(...lessons.map((l) => l.lesson_order)) : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -217,21 +217,24 @@ export function ManageCoursePage() {
           <div className="mt-4 flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-3xl font-bold text-gray-900">
                   {course.title}
                 </h1>
                 <Badge color={course.is_published ? "success" : "warning"}>
                   {course.is_published ? "Publicado" : "Borrador"}
                 </Badge>
               </div>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-gray-600">
                 ${course.price.toFixed(2)} • {lessons.length} lección
                 {lessons.length !== 1 ? "es" : ""}
               </p>
             </div>
 
             <div className="flex gap-2">
-              <Button color="blue" onClick={() => setShowEditCourseModal(true)}>
+              <Button
+                color="success"
+                onClick={() => setShowEditCourseModal(true)}
+              >
                 <div className="flex items-center gap-2">
                   <HiPencil className="h-4 w-4" />
                   <span>Editar curso</span>
@@ -260,20 +263,20 @@ export function ManageCoursePage() {
         </div>
 
         {/* Descripción del curso */}
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
-          <p className="text-gray-700 dark:text-gray-300">
+        <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+          <p className="text-gray-700">
             {course.description || "Sin descripción"}
           </p>
         </div>
 
         {/* Sección de lecciones */}
-        <div className="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+        <div className="rounded-lg bg-white p-6 shadow-md">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-900">
               <HiBookOpen className="h-6 w-6" />
               <span>Lecciones</span>
             </h2>
-            <Button color="blue" onClick={() => setShowAddLessonModal(true)}>
+            <Button color="success" onClick={() => setShowAddLessonModal(true)}>
               <div className="flex items-center gap-2">
                 <HiPlus className="h-4 w-4" />
                 <span>Agregar lección</span>
@@ -282,11 +285,11 @@ export function ManageCoursePage() {
           </div>
 
           {lessons.length === 0 ? (
-            <div className="rounded-lg bg-gray-50 p-12 text-center dark:bg-gray-700">
-              <p className="text-lg text-gray-500 dark:text-gray-400">
+            <div className="rounded-lg bg-gray-50 p-12 text-center">
+              <p className="text-lg text-gray-500">
                 Aún no has agregado lecciones a este curso.
               </p>
-              <p className="mt-2 text-sm text-gray-400 dark:text-gray-500">
+              <p className="mt-2 text-sm text-gray-400">
                 Comienza agregando tu primera lección para estructurar el
                 contenido.
               </p>
@@ -312,7 +315,7 @@ export function ManageCoursePage() {
           onClose={() => setShowEditCourseModal(false)}
         >
           <div className="p-6">
-            <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className="mb-4 text-xl font-bold text-gray-900">
               Editar información del curso
             </h3>
             <CourseForm
@@ -333,7 +336,7 @@ export function ManageCoursePage() {
           onClose={() => setShowAddLessonModal(false)}
         >
           <div className="p-6">
-            <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className="mb-4 text-xl font-bold text-gray-900">
               Agregar nueva lección
             </h3>
             <LessonForm
@@ -348,7 +351,7 @@ export function ManageCoursePage() {
         {/* Modal: Editar lección */}
         <Modal show={!!editingLesson} onClose={() => setEditingLesson(null)}>
           <div className="p-6">
-            <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className="mb-4 text-xl font-bold text-gray-900">
               Editar lección
             </h3>
             {editingLesson && (

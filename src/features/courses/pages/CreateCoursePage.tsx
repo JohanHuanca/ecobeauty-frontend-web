@@ -32,7 +32,7 @@ export function CreateCoursePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-2xl">
           {/* Header */}
@@ -45,27 +45,27 @@ export function CreateCoursePage() {
               ← Mis cursos creados
             </Button>
 
-            <h1 className="mt-4 flex items-center gap-3 text-4xl font-bold text-gray-900 dark:text-white">
-              <HiSparkles className="h-10 w-10 text-yellow-500" />
+            <h1 className="mt-4 flex items-center gap-3 text-4xl font-bold text-gray-900">
+              <HiSparkles className="text-accent-500 h-10 w-10" />
               <span>Crear Nuevo Curso</span>
             </h1>
-            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-lg text-gray-600">
               Comparte tu conocimiento creando un curso premium
             </p>
           </div>
 
           {/* Formulario */}
-          <div className="rounded-lg bg-white p-8 shadow-md dark:bg-gray-800">
+          <div className="rounded-lg bg-white p-8 shadow-md">
             <CourseForm onSubmit={handleSubmit} submitLabel="Crear curso" />
           </div>
 
           {/* Información adicional */}
-          <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-gray-800">
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-300">
+          <div className="border-primary-200 bg-primary-50 mt-6 rounded-lg border p-6">
+            <h3 className="text-primary-900 flex items-center gap-2 text-lg font-semibold">
               <HiLightBulb className="h-5 w-5" />
               <span>Próximos pasos</span>
             </h3>
-            <ul className="mt-2 list-inside list-disc space-y-1 text-blue-800 dark:text-blue-400">
+            <ul className="text-primary-800 mt-2 list-inside list-disc space-y-1">
               <li>Después de crear el curso, podrás agregar lecciones</li>
               <li>Cada lección puede incluir contenido de texto y/o video</li>
               <li>

@@ -70,9 +70,7 @@ export function Header() {
       <Link
         to={to}
         className={`block rounded px-3 py-2 md:p-0 ${
-          active
-            ? "text-blue-700 dark:text-blue-500"
-            : "text-gray-700 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500"
+          active ? "text-primary-700" : "hover:text-primary-700 text-gray-700"
         }`}
         onClick={() => setIsMenuOpen(false)}
       >
@@ -82,7 +80,7 @@ export function Header() {
   };
 
   return (
-    <nav className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+    <nav className="border-primary-200 border-b bg-white shadow-sm">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         {/* Logo */}
         <Link
@@ -90,8 +88,8 @@ export function Header() {
           className="flex items-center space-x-3"
           onClick={() => setIsMenuOpen(false)}
         >
-          <GiFlowerPot className="h-8 w-8 text-green-600 dark:text-green-400" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <GiFlowerPot className="text-primary-600 h-8 w-8" />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-900">
             EcoBeauty
           </span>
         </Link>
@@ -102,7 +100,7 @@ export function Header() {
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                className="flex rounded-full text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                className="flex rounded-full text-sm focus:ring-4 focus:ring-gray-300"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <Avatar
@@ -118,12 +116,12 @@ export function Header() {
 
               {/* Dropdown */}
               {isDropdownOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-48 divide-y divide-gray-100 rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700">
+                <div className="absolute right-0 z-50 mt-2 w-48 divide-y divide-gray-100 rounded-lg bg-white shadow">
                   <div className="px-4 py-3">
-                    <span className="block text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="block text-sm font-medium text-gray-900">
                       {profile?.full_name || "Usuario"}
                     </span>
-                    <span className="flex items-center gap-1 truncate text-sm text-gray-500 dark:text-gray-400">
+                    <span className="flex items-center gap-1 truncate text-sm text-gray-500">
                       {isExpert ? (
                         <>
                           <HiSparkles className="h-4 w-4" />
@@ -141,7 +139,7 @@ export function Header() {
                     <li>
                       <Link
                         to="/profile"
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <HiUser className="h-4 w-4" />
@@ -151,7 +149,7 @@ export function Header() {
                     <li>
                       <Link
                         to="/my-courses"
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <HiBookOpen className="h-4 w-4" />
@@ -163,7 +161,7 @@ export function Header() {
                         <li>
                           <Link
                             to="/my-created-courses"
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsDropdownOpen(false)}
                           >
                             <HiAcademicCap className="h-4 w-4" />
@@ -173,7 +171,7 @@ export function Header() {
                         <li>
                           <Link
                             to="/my-created-tutorials"
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsDropdownOpen(false)}
                           >
                             <HiBookOpen className="h-4 w-4" />
@@ -183,7 +181,7 @@ export function Header() {
                         <li>
                           <Link
                             to="/my-expert-profile"
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsDropdownOpen(false)}
                           >
                             <HiSparkles className="h-4 w-4" />
@@ -197,7 +195,7 @@ export function Header() {
                     <button
                       onClick={handleLogout}
                       disabled={isLoggingOut}
-                      className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:text-gray-200 dark:hover:bg-gray-600"
+                      className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                       <HiLogout className="h-4 w-4" />
                       <span>
@@ -224,7 +222,7 @@ export function Header() {
           {/* Toggle menu móvil */}
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none md:hidden dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg
@@ -250,7 +248,7 @@ export function Header() {
             isMenuOpen ? "block" : "hidden"
           } w-full md:order-1 md:block md:w-auto`}
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 dark:border-gray-700 dark:bg-gray-800 md:dark:bg-gray-800">
+          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0">
             <li>
               <NavLink to="/community">Comunidad</NavLink>
             </li>

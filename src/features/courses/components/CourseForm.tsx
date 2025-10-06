@@ -108,14 +108,14 @@ export function CourseForm({
           required
           disabled={isSubmitting}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Define el precio de venta de tu curso
         </p>
       </div>
 
       {/* Mensaje de error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400">
+        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
           {error}
         </div>
       )}

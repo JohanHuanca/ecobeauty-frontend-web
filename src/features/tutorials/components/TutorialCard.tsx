@@ -18,10 +18,10 @@ export function TutorialCard({ tutorial }: TutorialCardProps) {
           size="sm"
         />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+          <p className="truncate text-sm font-medium text-gray-900">
             {tutorial.profiles?.full_name || "Usuario"}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-gray-500">
             {new Date(tutorial.created_at).toLocaleDateString("es-ES")}
           </p>
         </div>
@@ -33,25 +33,25 @@ export function TutorialCard({ tutorial }: TutorialCardProps) {
         </div>
       )}
 
-      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
         {tutorial.title}
       </h5>
 
-      <p className="mb-4 line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
+      <p className="mb-4 line-clamp-3 font-normal text-gray-700">
         {tutorial.description}
       </p>
 
       {/* Estadísticas de likes y comentarios */}
       <div className="mb-4 flex items-center gap-4">
-        <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex items-center gap-1 text-sm text-gray-600">
           <HiHeart className="h-5 w-5 text-red-500" />
           <span className="font-medium">{tutorial.likes_count || 0}</span>
           <span className="hidden sm:inline">
             {tutorial.likes_count === 1 ? "me gusta" : "me gusta"}
           </span>
         </div>
-        <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-          <HiChatAlt className="h-5 w-5 text-blue-500" />
+        <div className="flex items-center gap-1 text-sm text-gray-600">
+          <HiChatAlt className="text-primary-500 h-5 w-5" />
           <span className="font-medium">{tutorial.comments_count || 0}</span>
           <span className="hidden sm:inline">
             {tutorial.comments_count === 1 ? "comentario" : "comentarios"}
@@ -61,7 +61,7 @@ export function TutorialCard({ tutorial }: TutorialCardProps) {
 
       <Link
         to={`/tutorials/${tutorial.id}`}
-        className="inline-flex items-center font-medium text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
+        className="text-primary-600 hover:text-primary-700 inline-flex items-center font-medium"
       >
         Ver tutorial completo
         <svg

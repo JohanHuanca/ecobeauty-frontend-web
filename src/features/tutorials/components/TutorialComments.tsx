@@ -125,7 +125,7 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
 
     return (
       <div key={comment.id} className={isReply ? "ml-12" : ""}>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+        <div className="rounded-lg border border-gray-200 bg-white p-4">
           <div className="flex items-start gap-3">
             <Avatar
               img={comment.profiles?.avatar_url || undefined}
@@ -134,13 +134,11 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
             />
             <div className="flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="font-semibold text-gray-900 dark:text-white">
+                <span className="font-semibold text-gray-900">
                   {comment.profiles?.full_name || "Usuario"}
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  •
-                </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-gray-500">•</span>
+                <span className="text-sm text-gray-500">
                   {new Date(comment.created_at).toLocaleDateString("es-ES", {
                     year: "numeric",
                     month: "short",
@@ -148,7 +146,7 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
                   })}
                 </span>
               </div>
-              <p className="mb-2 whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+              <p className="mb-2 whitespace-pre-wrap text-gray-700">
                 {comment.content}
               </p>
 
@@ -156,7 +154,7 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
               {!isReply && session && (
                 <button
                   onClick={() => setReplyTo(isReplying ? null : comment.id)}
-                  className="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                  className="text-primary-600 hover:text-primary-700 flex items-center gap-1 text-sm font-medium"
                 >
                   <HiReply className="h-4 w-4" />
                   {isReplying ? "Cancelar" : "Responder"}
@@ -221,7 +219,7 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
 
   return (
     <div className="mt-8">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+      <h2 className="mb-6 text-2xl font-bold text-gray-900">
         Comentarios ({totalComments})
       </h2>
 
@@ -243,7 +241,7 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
           </div>
 
           {error && (
-            <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+            <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
               {error}
             </div>
           )}
@@ -255,10 +253,8 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
           </div>
         </form>
       ) : (
-        <div className="mb-8 rounded-lg bg-blue-50 p-4 text-center dark:bg-blue-900/20">
-          <p className="text-blue-800 dark:text-blue-300">
-            Debes iniciar sesión para comentar
-          </p>
+        <div className="bg-primary-50 mb-8 rounded-lg p-4 text-center">
+          <p className="text-primary-800">Debes iniciar sesión para comentar</p>
         </div>
       )}
 
@@ -268,8 +264,8 @@ export function TutorialComments({ tutorialId }: TutorialCommentsProps) {
           <Spinner size="lg" />
         </div>
       ) : comments.length === 0 ? (
-        <div className="rounded-lg bg-gray-50 p-8 text-center dark:bg-gray-800">
-          <p className="text-gray-600 dark:text-gray-400">
+        <div className="rounded-lg bg-gray-50 p-8 text-center">
+          <p className="text-gray-600">
             Aún no hay comentarios. ¡Sé el primero en comentar!
           </p>
         </div>

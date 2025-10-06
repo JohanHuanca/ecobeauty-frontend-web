@@ -100,7 +100,7 @@ export function LessonForm({
           required
           disabled={isSubmitting}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Determina la secuencia de las lecciones en el curso
         </p>
       </div>
@@ -133,14 +133,14 @@ export function LessonForm({
           }
           disabled={isSubmitting}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Opcional: agrega un video educativo a esta lección
         </p>
       </div>
 
       {/* Mensaje de error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400">
+        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
           {error}
         </div>
       )}

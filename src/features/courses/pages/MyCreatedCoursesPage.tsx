@@ -51,21 +51,21 @@ export function MyCreatedCoursesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8 flex items-start justify-between">
           <div>
-            <h1 className="flex items-center gap-3 text-4xl font-bold text-gray-900 dark:text-white">
-              <HiAcademicCap className="h-10 w-10 text-green-600" />
+            <h1 className="flex items-center gap-3 text-4xl font-bold text-gray-900">
+              <HiAcademicCap className="text-primary-600 h-10 w-10" />
               <span>Mis Cursos Creados</span>
             </h1>
-            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-lg text-gray-600">
               Gestiona tus cursos y contenido educativo
             </p>
           </div>
 
-          <Button color="blue" onClick={() => navigate("/courses/create")}>
+          <Button color="success" onClick={() => navigate("/courses/create")}>
             <HiPlus className="mr-2 h-5 w-5" />
             Crear nuevo curso
           </Button>
@@ -73,23 +73,23 @@ export function MyCreatedCoursesPage() {
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-gray-800 dark:text-red-400">
+          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800">
             {error}
           </div>
         )}
 
         {/* Grid de cursos */}
         {courses.length === 0 ? (
-          <div className="rounded-lg bg-white p-12 text-center dark:bg-gray-800">
-            <p className="text-xl text-gray-500 dark:text-gray-400">
+          <div className="rounded-lg bg-white p-12 text-center">
+            <p className="text-xl text-gray-500">
               Aún no has creado ningún curso.
             </p>
-            <p className="mt-2 text-gray-400 dark:text-gray-500">
+            <p className="mt-2 text-gray-400">
               ¡Comienza a compartir tu conocimiento creando tu primer curso!
             </p>
             <Button
               className="mt-6"
-              color="blue"
+              color="success"
               onClick={() => navigate("/courses/create")}
             >
               <div className="flex items-center gap-2">
@@ -102,27 +102,21 @@ export function MyCreatedCoursesPage() {
           <>
             {/* Estadísticas rápidas */}
             <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div className="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Total de cursos
-                </p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">
+              <div className="rounded-lg bg-white p-4 shadow-md">
+                <p className="text-sm text-gray-500">Total de cursos</p>
+                <p className="text-3xl font-bold text-gray-900">
                   {courses.length}
                 </p>
               </div>
-              <div className="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Publicados
-                </p>
-                <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+              <div className="rounded-lg bg-white p-4 shadow-md">
+                <p className="text-sm text-gray-500">Publicados</p>
+                <p className="text-primary-600 text-3xl font-bold">
                   {courses.filter((c) => c.is_published).length}
                 </p>
               </div>
-              <div className="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Borradores
-                </p>
-                <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+              <div className="rounded-lg bg-white p-4 shadow-md">
+                <p className="text-sm text-gray-500">Borradores</p>
+                <p className="text-accent-600 text-3xl font-bold">
                   {courses.filter((c) => !c.is_published).length}
                 </p>
               </div>
@@ -138,12 +132,12 @@ export function MyCreatedCoursesPage() {
         )}
 
         {/* Información adicional */}
-        <div className="mt-12 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-gray-800">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-300">
+        <div className="border-primary-200 bg-primary-50 mt-12 rounded-lg border p-6">
+          <h3 className="text-primary-900 flex items-center gap-2 text-lg font-semibold">
             <HiLightBulb className="h-5 w-5" />
             <span>Consejos para tus cursos</span>
           </h3>
-          <ul className="mt-2 list-inside list-disc space-y-1 text-blue-800 dark:text-blue-400">
+          <ul className="text-primary-800 mt-2 list-inside list-disc space-y-1">
             <li>
               Asegúrate de agregar al menos 3-5 lecciones antes de publicar
             </li>

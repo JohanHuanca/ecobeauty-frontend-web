@@ -49,15 +49,15 @@ export function ExpertsDirectoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="mb-4 flex items-center gap-3 text-3xl font-bold text-gray-900 dark:text-white">
-            <HiSparkles className="h-10 w-10 text-yellow-500" />
+          <h1 className="mb-4 flex items-center gap-3 text-3xl font-bold text-gray-900">
+            <HiSparkles className="text-accent-500 h-10 w-10" />
             <span>Directorio de Expertos</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             Conecta con profesionales en cosmética natural y recibe asesoría
             personalizada
           </p>
@@ -77,16 +77,14 @@ export function ExpertsDirectoryPage() {
         {/* Estado de carga */}
         {isLoading && (
           <div className="py-12 text-center">
-            <div className="mx-auto h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-green-500"></div>
-            <p className="mt-4 text-gray-600 dark:text-gray-400">
-              Cargando expertos...
-            </p>
+            <div className="border-primary-500 mx-auto h-12 w-12 animate-spin rounded-full border-t-2 border-b-2"></div>
+            <p className="mt-4 text-gray-600">Cargando expertos...</p>
           </div>
         )}
 
         {/* Mensaje de error */}
         {error && (
-          <div className="rounded-lg bg-red-50 p-4 text-center text-red-800 dark:bg-gray-800 dark:text-red-400">
+          <div className="rounded-lg bg-red-50 p-4 text-center text-red-800">
             {error}
           </div>
         )}
@@ -95,8 +93,8 @@ export function ExpertsDirectoryPage() {
         {!isLoading && !error && (
           <>
             {filteredExperts.length === 0 ? (
-              <div className="rounded-lg bg-gray-50 p-12 text-center dark:bg-gray-800">
-                <p className="text-lg text-gray-600 dark:text-gray-400">
+              <div className="rounded-lg bg-gray-50 p-12 text-center">
+                <p className="text-lg text-gray-600">
                   {searchQuery
                     ? "No se encontraron expertos con ese criterio de búsqueda"
                     : "Aún no hay expertos registrados"}
@@ -104,7 +102,7 @@ export function ExpertsDirectoryPage() {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="mt-4 text-green-600 hover:underline dark:text-green-400"
+                    className="text-primary-600 mt-4 hover:underline"
                   >
                     Limpiar búsqueda
                   </button>
@@ -112,7 +110,7 @@ export function ExpertsDirectoryPage() {
               </div>
             ) : (
               <>
-                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mb-4 text-sm text-gray-600">
                   {filteredExperts.length}{" "}
                   {filteredExperts.length === 1 ? "experto" : "expertos"}{" "}
                   {searchQuery && "encontrados"}

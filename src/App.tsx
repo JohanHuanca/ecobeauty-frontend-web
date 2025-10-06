@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { DarkThemeToggle } from "flowbite-react";
 import { LoginPage } from "./features/security/pages/LoginPage";
 import { RegisterPage } from "./features/security/pages/RegisterPage";
 import { ProfilePage } from "./features/security/pages/ProfilePage";
@@ -33,10 +32,6 @@ export default function App() {
 
   return (
     <>
-      <div className="absolute top-4 right-4 z-50">
-        <DarkThemeToggle />
-      </div>
-
       {shouldShowHeader && <Header />}
 
       <Routes>

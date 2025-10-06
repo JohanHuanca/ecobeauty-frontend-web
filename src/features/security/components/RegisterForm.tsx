@@ -179,18 +179,22 @@ export function RegisterForm({
           />
         </div>
 
-        <Button type="submit" disabled={loading} className="w-full">
+        <Button
+          type="submit"
+          disabled={loading}
+          className="bg-primary-600 hover:bg-primary-700 w-full"
+        >
           {loading ? "Registrando..." : "Registrarse"}
         </Button>
       </form>
 
       {onSwitchToLogin && (
-        <div className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        <div className="mt-4 text-center text-sm text-gray-600">
           ¿Ya tienes una cuenta?{" "}
           <button
             type="button"
             onClick={onSwitchToLogin}
-            className="text-blue-600 hover:underline dark:text-blue-500"
+            className="text-primary-600 hover:underline"
           >
             Inicia sesión aquí
           </button>

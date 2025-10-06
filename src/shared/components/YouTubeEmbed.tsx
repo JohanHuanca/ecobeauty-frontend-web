@@ -51,17 +51,17 @@ export function YouTubeEmbed({ url, title }: YouTubeEmbedProps) {
 
   if (hasError && isLocalhost) {
     return (
-      <div className="relative mb-6 aspect-video overflow-hidden rounded-lg bg-gradient-to-br from-red-100 to-orange-100 dark:from-gray-800 dark:to-gray-700">
+      <div className="relative mb-6 aspect-video overflow-hidden rounded-lg bg-gradient-to-br from-red-100 to-orange-100">
         <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
           <div className="mb-4 text-6xl">🎥</div>
-          <h3 className="mb-2 text-xl font-bold text-gray-800 dark:text-white">
+          <h3 className="mb-2 text-xl font-bold text-gray-800">
             Video no disponible en localhost
           </h3>
-          <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
+          <p className="mb-4 text-sm text-gray-600">
             YouTube bloquea embeds en localhost por seguridad. Esto es normal.
           </p>
-          <div className="rounded-lg bg-white p-4 dark:bg-gray-800">
-            <p className="mb-2 text-xs font-semibold text-gray-700 dark:text-gray-300">
+          <div className="rounded-lg bg-white p-4">
+            <p className="mb-2 text-xs font-semibold text-gray-700">
               Para ver el video en desarrollo:
             </p>
             <a
@@ -76,7 +76,7 @@ export function YouTubeEmbed({ url, title }: YouTubeEmbedProps) {
               Ver en YouTube
             </a>
           </div>
-          <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-4 text-xs text-gray-500">
             ✅ Funcionará correctamente en producción (Vercel, Netlify, etc.)
           </p>
         </div>
@@ -85,7 +85,7 @@ export function YouTubeEmbed({ url, title }: YouTubeEmbedProps) {
   }
 
   return (
-    <div className="relative mb-6 aspect-video overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
+    <div className="relative mb-6 aspect-video overflow-hidden rounded-lg bg-gray-100">
       <iframe
         src={embedUrl}
         title={title}

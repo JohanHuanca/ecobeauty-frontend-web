@@ -78,7 +78,7 @@ export function PostForm({ onSubmit, isLoading = false }: PostFormProps) {
           onChange={handleImageChange}
           disabled={isLoading}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Comparte una foto de tu creación o proyecto
         </p>
       </div>

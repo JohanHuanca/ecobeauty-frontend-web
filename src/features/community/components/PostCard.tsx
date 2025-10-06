@@ -16,10 +16,10 @@ export function PostCard({ post }: PostCardProps) {
           size="md"
         />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+          <p className="truncate text-sm font-medium text-gray-900">
             {post.profiles?.full_name || "Usuario"}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-gray-500">
             {new Date(post.created_at).toLocaleDateString("es-ES", {
               year: "numeric",
               month: "long",
@@ -31,12 +31,10 @@ export function PostCard({ post }: PostCardProps) {
         </div>
       </div>
 
-      <p className="mb-3 whitespace-pre-wrap text-gray-700 dark:text-gray-300">
-        {post.content}
-      </p>
+      <p className="mb-3 whitespace-pre-wrap text-gray-700">{post.content}</p>
 
       {post.image_url && (
-        <div className="relative mb-3 aspect-video overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
+        <div className="relative mb-3 aspect-video overflow-hidden rounded-lg bg-gray-100">
           <img
             src={post.image_url}
             alt="Publicación"
@@ -45,10 +43,10 @@ export function PostCard({ post }: PostCardProps) {
         </div>
       )}
 
-      <div className="flex items-center gap-4 border-t border-gray-200 pt-3 dark:border-gray-700">
+      <div className="flex items-center gap-4 border-t border-gray-200 pt-3">
         <Link
           to={`/community/${post.id}`}
-          className="flex items-center text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+          className="hover:text-primary-600 flex items-center text-sm text-gray-500"
         >
           <svg
             className="mr-1 h-5 w-5"

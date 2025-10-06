@@ -52,7 +52,7 @@ export function ProfilePage() {
   // Si está inicializando, mostrar spinner
   if (initializing) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <Spinner size="xl" />
       </div>
     );
@@ -220,7 +220,7 @@ export function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 px-4 py-12">
       <div className="mx-auto max-w-2xl">
         <Card>
           <div className="flex flex-col items-center gap-4">
@@ -245,7 +245,7 @@ export function ProfilePage() {
               <button
                 onClick={handleAvatarClick}
                 disabled={uploadingAvatar}
-                className="absolute right-0 bottom-0 rounded-full bg-blue-600 p-2 text-white shadow-lg hover:bg-blue-700 disabled:opacity-50"
+                className="bg-primary-600 hover:bg-primary-700 absolute right-0 bottom-0 rounded-full p-2 text-white shadow-lg disabled:opacity-50"
               >
                 <HiCamera className="h-4 w-4" />
               </button>
@@ -260,12 +260,10 @@ export function ProfilePage() {
 
             {/* Información del usuario */}
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-2xl font-bold text-gray-900">
                 {profile.full_name}
               </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {profile.email}
-              </p>
+              <p className="text-sm text-gray-600">{profile.email}</p>
             </div>
 
             {/* Badges de roles */}
@@ -283,7 +281,7 @@ export function ProfilePage() {
             </div>
           </div>
 
-          <div className="mt-6 border-t pt-6 dark:border-gray-700">
+          <div className="mt-6 border-t pt-6">
             {error && (
               <Alert
                 color="failure"
@@ -341,31 +339,27 @@ export function ProfilePage() {
               </div>
             ) : (
               <div className="flex flex-col gap-4">
-                <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                  <div className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                <div className="rounded-lg bg-gray-50 p-4">
+                  <div className="mb-2 text-sm font-medium text-gray-700">
                     Información de perfil
                   </div>
                   <div className="space-y-2">
                     <div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        Nombre:
-                      </span>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="text-xs text-gray-500">Nombre:</span>
+                      <p className="text-sm font-medium text-gray-900">
                         {profile.full_name}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        Email:
-                      </span>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="text-xs text-gray-500">Email:</span>
+                      <p className="text-sm font-medium text-gray-900">
                         {profile.email}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <Button onClick={handleEditToggle} color="blue">
+                <Button onClick={handleEditToggle} color="success">
                   Editar perfil
                 </Button>
               </div>
@@ -374,40 +368,40 @@ export function ProfilePage() {
 
           {/* Sección para convertirse en experto */}
           {!isExpert && hasExpertProfile === false && (
-            <div className="mt-6 border-t pt-6 dark:border-gray-700">
-              <div className="rounded-lg bg-gradient-to-r from-purple-50 to-blue-50 p-6 dark:from-purple-900 dark:to-blue-900">
+            <div className="mt-6 border-t pt-6">
+              <div className="rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 p-6">
                 <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-purple-100 p-3 dark:bg-purple-800">
-                    <HiStar className="h-6 w-6 text-purple-600 dark:text-purple-300" />
+                  <div className="bg-primary-100 rounded-full p-3">
+                    <HiStar className="text-primary-600 h-6 w-6" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900">
                       ¿Quieres compartir tu conocimiento?
                     </h3>
-                    <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">
+                    <p className="mb-4 text-sm text-gray-700">
                       Conviértete en experto y empieza a ofrecer tus servicios,
                       crear cursos y tutoriales para la comunidad de EcoBeauty.
                     </p>
-                    <ul className="mb-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <ul className="mb-4 space-y-2 text-sm text-gray-600">
                       <li className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
+                        <span className="text-primary-500">✓</span>
                         Crea y vende cursos de cosmética natural
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
+                        <span className="text-primary-500">✓</span>
                         Publica tutoriales gratuitos
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
+                        <span className="text-primary-500">✓</span>
                         Ofrece consultorías personalizadas
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
+                        <span className="text-primary-500">✓</span>
                         Aparece en el directorio de expertos
                       </li>
                     </ul>
                     <Button
-                      color="purple"
+                      className="bg-secondary-600 hover:bg-secondary-700"
                       onClick={() => setShowBecomeExpertModal(true)}
                       disabled={becomingExpert}
                     >
@@ -422,11 +416,10 @@ export function ProfilePage() {
 
           {/* Botón para ir al perfil de experto si ya lo es */}
           {isExpert && (
-            <div className="mt-6 border-t pt-6 dark:border-gray-700">
+            <div className="mt-6 border-t pt-6">
               <Button
-                color="purple"
+                className="bg-secondary-600 hover:bg-secondary-700 w-full"
                 onClick={() => navigate("/my-expert-profile")}
-                className="w-full"
               >
                 <HiStar className="mr-2 h-5 w-5" />
                 {hasExpertProfile
@@ -436,7 +429,7 @@ export function ProfilePage() {
             </div>
           )}
 
-          <div className="mt-6 border-t pt-6 dark:border-gray-700">
+          <div className="mt-6 border-t pt-6">
             <Button
               color="failure"
               onClick={handleLogout}
@@ -453,23 +446,23 @@ export function ProfilePage() {
         {showBecomeExpertModal && (
           <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
             <Card className="w-full max-w-md">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900">
                 Convertirse en Experto
               </h3>
               <div className="space-y-4">
-                <p className="text-gray-700 dark:text-gray-300">
+                <p className="text-gray-700">
                   Al convertirte en experto, obtendrás acceso a funcionalidades
                   adicionales de la plataforma:
                 </p>
-                <ul className="list-inside list-disc space-y-2 text-gray-600 dark:text-gray-400">
+                <ul className="list-inside list-disc space-y-2 text-gray-600">
                   <li>Crear y gestionar cursos de pago</li>
                   <li>Publicar tutoriales gratuitos</li>
                   <li>Crear tu perfil profesional</li>
                   <li>Ofrecer consultorías y servicios</li>
                   <li>Aparecer en el directorio de expertos</li>
                 </ul>
-                <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900">
-                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                <div className="bg-accent-50 rounded-lg p-4">
+                  <p className="text-accent-800 text-sm">
                     <strong>Nota:</strong> Después de convertirte en experto,
                     deberás completar tu perfil profesional para aparecer en el
                     directorio.
@@ -480,8 +473,7 @@ export function ProfilePage() {
                 <Button
                   onClick={handleBecomeExpert}
                   disabled={becomingExpert}
-                  color="purple"
-                  className="flex-1"
+                  className="bg-secondary-600 hover:bg-secondary-700 flex-1"
                 >
                   {becomingExpert ? "Procesando..." : "Confirmar"}
                 </Button>

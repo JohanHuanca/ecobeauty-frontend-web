@@ -41,23 +41,23 @@ export function CommunityFeedPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
-          <p className="text-red-800 dark:text-red-200">{error}</p>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+          <p className="text-red-800">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="mb-2 flex items-center gap-3 text-3xl font-bold text-gray-900 dark:text-white">
-              <HiUserGroup className="h-10 w-10 text-purple-600" />
+            <h1 className="mb-2 flex items-center gap-3 text-3xl font-bold text-gray-900">
+              <HiUserGroup className="text-secondary-600 h-10 w-10" />
               <span>Comunidad</span>
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600">
               Comparte experiencias y conecta con otros amantes de la cosmética
               natural
             </p>
@@ -87,7 +87,7 @@ export function CommunityFeedPage() {
         {posts.length === 0 ? (
           <div className="py-12 text-center">
             <svg
-              className="mx-auto mb-4 h-16 w-16 text-gray-400 dark:text-gray-600"
+              className="mx-auto mb-4 h-16 w-16 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -99,10 +99,10 @@ export function CommunityFeedPage() {
                 d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
               />
             </svg>
-            <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
+            <h3 className="mb-2 text-lg font-medium text-gray-900">
               No hay publicaciones aún
             </h3>
-            <p className="mb-4 text-gray-600 dark:text-gray-400">
+            <p className="mb-4 text-gray-600">
               {session
                 ? "¡Sé el primero en compartir algo con la comunidad!"
                 : "Inicia sesión para ser el primero en publicar"}

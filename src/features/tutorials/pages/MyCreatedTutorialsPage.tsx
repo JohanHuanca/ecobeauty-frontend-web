@@ -41,21 +41,21 @@ export function MyCreatedTutorialsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 py-8">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="flex items-center gap-3 text-3xl font-bold text-gray-900 dark:text-white">
-              <HiBookOpen className="h-10 w-10 text-blue-600" />
+            <h1 className="flex items-center gap-3 text-3xl font-bold text-gray-900">
+              <HiBookOpen className="text-primary-600 h-10 w-10" />
               <span>Mis Tutoriales Creados</span>
             </h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-gray-600">
               Gestiona y visualiza los tutoriales que has compartido con la
               comunidad
             </p>
           </div>
-          <Button color="blue" onClick={() => navigate("/tutorials/create")}>
+          <Button color="success" onClick={() => navigate("/tutorials/create")}>
             <div className="flex items-center gap-2">
               <HiPlus className="h-5 w-5" />
               <span>Crear nuevo tutorial</span>
@@ -65,24 +65,24 @@ export function MyCreatedTutorialsPage() {
 
         {/* Error */}
         {error && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
-            <p className="text-red-800 dark:text-red-200">{error}</p>
+          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
+            <p className="text-red-800">{error}</p>
           </div>
         )}
 
         {/* Empty State */}
         {tutorials.length === 0 ? (
-          <div className="rounded-lg bg-white p-12 text-center shadow-md dark:bg-gray-800">
+          <div className="rounded-lg bg-white p-12 text-center shadow-md">
             <div className="mb-4 text-6xl">📚</div>
-            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+            <h3 className="mb-2 text-xl font-semibold text-gray-900">
               Aún no has creado tutoriales
             </h3>
-            <p className="mb-6 text-gray-600 dark:text-gray-400">
+            <p className="mb-6 text-gray-600">
               ¡Comienza a compartir tu conocimiento creando tu primer tutorial!
             </p>
             <Button
               className="mt-6"
-              color="blue"
+              color="success"
               onClick={() => navigate("/tutorials/create")}
             >
               <div className="flex items-center gap-2">
@@ -95,27 +95,21 @@ export function MyCreatedTutorialsPage() {
           <>
             {/* Estadísticas rápidas */}
             <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div className="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Total de tutoriales
-                </p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="rounded-lg bg-white p-4 shadow-md">
+                <p className="text-sm text-gray-500">Total de tutoriales</p>
+                <p className="text-2xl font-bold text-gray-900">
                   {tutorials.length}
                 </p>
               </div>
-              <div className="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Total de likes
-                </p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="rounded-lg bg-white p-4 shadow-md">
+                <p className="text-sm text-gray-500">Total de likes</p>
+                <p className="text-2xl font-bold text-gray-900">
                   {tutorials.reduce((sum, t) => sum + (t.likes_count || 0), 0)}
                 </p>
               </div>
-              <div className="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Total de comentarios
-                </p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="rounded-lg bg-white p-4 shadow-md">
+                <p className="text-sm text-gray-500">Total de comentarios</p>
+                <p className="text-2xl font-bold text-gray-900">
                   {tutorials.reduce(
                     (sum, t) => sum + (t.comments_count || 0),
                     0,
@@ -134,12 +128,12 @@ export function MyCreatedTutorialsPage() {
         )}
 
         {/* Información adicional */}
-        <div className="mt-12 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-gray-800">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-300">
+        <div className="border-primary-200 bg-primary-50 mt-12 rounded-lg border p-6">
+          <h3 className="text-primary-900 flex items-center gap-2 text-lg font-semibold">
             <HiLightBulb className="h-5 w-5" />
             <span>Consejos para tus tutoriales</span>
           </h3>
-          <ul className="mt-2 list-inside list-disc space-y-1 text-blue-800 dark:text-blue-400">
+          <ul className="text-primary-800 mt-2 list-inside list-disc space-y-1">
             <li>
               Utiliza títulos claros y descriptivos que expliquen el contenido
             </li>

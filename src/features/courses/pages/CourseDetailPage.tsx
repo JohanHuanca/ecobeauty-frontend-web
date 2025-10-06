@@ -103,7 +103,7 @@ export function CourseDetailPage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-xl text-red-600 dark:text-red-400">{error}</p>
+          <p className="text-xl text-red-600">{error}</p>
           <Button className="mt-4" onClick={() => navigate("/courses")}>
             Volver al catálogo
           </Button>
@@ -119,30 +119,30 @@ export function CourseDetailPage() {
   // Vista para usuarios NO inscritos
   if (!course.is_enrolled) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8">
           <div className="mx-auto max-w-4xl">
             {/* Header del curso */}
-            <div className="rounded-lg bg-white p-8 shadow-md dark:bg-gray-800">
+            <div className="rounded-lg bg-white p-8 shadow-md">
               <Badge color="success" className="mb-4 w-fit">
                 Curso Premium
               </Badge>
 
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-4xl font-bold text-gray-900">
                 {course.title}
               </h1>
 
-              <p className="mt-4 text-3xl font-bold text-green-600 dark:text-green-400">
+              <p className="text-primary-600 mt-4 text-3xl font-bold">
                 ${course.price.toFixed(2)} USD
               </p>
 
-              <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
+              <p className="mt-4 text-lg text-gray-700">
                 {course.description || "Sin descripción"}
               </p>
 
               {/* Información del experto */}
               {course.expert && (
-                <div className="mt-6 flex items-center gap-3 border-t border-gray-200 pt-6 dark:border-gray-700">
+                <div className="mt-6 flex items-center gap-3 border-t border-gray-200 pt-6">
                   <Avatar
                     img={course.expert.avatar_url || undefined}
                     alt={course.expert.full_name || "Experto"}
@@ -150,10 +150,8 @@ export function CourseDetailPage() {
                     rounded
                   />
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Creado por
-                    </p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <p className="text-sm text-gray-500">Creado por</p>
+                    <p className="text-lg font-semibold text-gray-900">
                       {course.expert.full_name || "Usuario"}
                     </p>
                   </div>
@@ -163,7 +161,7 @@ export function CourseDetailPage() {
               {/* Botón de inscripción */}
               <div className="mt-8">
                 {error && (
-                  <div className="mb-4 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-gray-700 dark:text-red-400">
+                  <div className="mb-4 rounded-lg bg-red-50 p-4 text-red-800">
                     {error}
                   </div>
                 )}
@@ -177,7 +175,7 @@ export function CourseDetailPage() {
                   {enrolling ? "Procesando..." : "💳 Comprar curso"}
                 </Button>
 
-                <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                <p className="mt-4 text-center text-sm text-gray-500">
                   Al comprar este curso tendrás acceso completo a todo su
                   contenido
                 </p>
@@ -198,7 +196,7 @@ export function CourseDetailPage() {
 
   // Vista para usuarios INSCRITOS (con acceso al contenido)
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header del curso */}
         <div className="mb-6">
@@ -210,12 +208,12 @@ export function CourseDetailPage() {
             ← Mis cursos
           </Button>
 
-          <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mt-4 text-3xl font-bold text-gray-900">
             {course.title}
           </h1>
 
           {course.expert && (
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-gray-600">
               Por {course.expert.full_name || "Usuario"}
             </p>
           )}
@@ -224,18 +222,18 @@ export function CourseDetailPage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Lista de lecciones (sidebar) */}
           <div className="lg:col-span-1">
-            <div className="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
-              <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
+            <div className="rounded-lg bg-white p-6 shadow-md">
+              <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900">
                 <HiBookOpen className="h-5 w-5" />
                 <span>Contenido del curso</span>
               </h2>
 
-              <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+              <p className="mb-4 text-sm text-gray-600">
                 {lessons.length} lección{lessons.length !== 1 ? "es" : ""}
               </p>
 
               {lessons.length === 0 ? (
-                <p className="text-gray-500 dark:text-gray-400">
+                <p className="text-gray-500">
                   Este curso aún no tiene lecciones disponibles.
                 </p>
               ) : (
@@ -256,12 +254,12 @@ export function CourseDetailPage() {
           {/* Contenido de la lección seleccionada */}
           <div className="lg:col-span-2">
             {selectedLesson ? (
-              <div className="rounded-lg bg-white p-8 shadow-md dark:bg-gray-800">
+              <div className="rounded-lg bg-white p-8 shadow-md">
                 <div className="mb-4 flex items-center gap-2">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-lg font-bold text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                  <span className="bg-primary-100 text-primary-600 flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold">
                     {selectedLesson.lesson_order}
                   </span>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <h2 className="text-2xl font-bold text-gray-900">
                     {selectedLesson.title}
                   </h2>
                 </div>
@@ -287,22 +285,22 @@ export function CourseDetailPage() {
 
                 {/* Contenido de texto */}
                 {selectedLesson.content_text && (
-                  <div className="prose dark:prose-invert max-w-none">
-                    <div className="whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+                  <div className="prose max-w-none">
+                    <div className="whitespace-pre-wrap text-gray-700">
                       {selectedLesson.content_text}
                     </div>
                   </div>
                 )}
 
                 {!selectedLesson.video_url && !selectedLesson.content_text && (
-                  <p className="text-gray-500 dark:text-gray-400">
+                  <p className="text-gray-500">
                     Esta lección no tiene contenido disponible.
                   </p>
                 )}
               </div>
             ) : (
-              <div className="rounded-lg bg-white p-12 text-center shadow-md dark:bg-gray-800">
-                <p className="text-xl text-gray-500 dark:text-gray-400">
+              <div className="rounded-lg bg-white p-12 text-center shadow-md">
+                <p className="text-xl text-gray-500">
                   Selecciona una lección para comenzar
                 </p>
               </div>

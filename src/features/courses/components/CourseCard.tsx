@@ -29,22 +29,22 @@ export function CourseCard({
 
       {/* Título y precio */}
       <div className="mb-2">
-        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="text-2xl font-bold tracking-tight text-gray-900">
           {course.title}
         </h5>
-        <p className="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">
+        <p className="text-primary-600 mt-2 text-3xl font-bold">
           ${course.price.toFixed(2)}
         </p>
       </div>
 
       {/* Descripción */}
-      <p className="line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
+      <p className="line-clamp-3 font-normal text-gray-700">
         {course.description || "Sin descripción"}
       </p>
 
       {/* Información del experto */}
       {course.expert && (
-        <div className="flex items-center gap-2 border-t border-gray-200 pt-2 dark:border-gray-700">
+        <div className="flex items-center gap-2 border-t border-gray-200 pt-2">
           <Avatar
             img={course.expert.avatar_url || undefined}
             alt={course.expert.full_name || "Experto"}
@@ -52,10 +52,10 @@ export function CourseCard({
             rounded
           />
           <div className="flex-1">
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
+            <p className="text-sm font-medium text-gray-900">
               {course.expert.full_name || "Usuario"}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-gray-500">
               {course.lessons_count || 0} lección
               {course.lessons_count !== 1 ? "es" : ""}
             </p>
@@ -68,7 +68,7 @@ export function CourseCard({
         {showManageButton ? (
           <>
             <Link to={`/courses/manage/${course.id}`} className="flex-1">
-              <Button color="blue" className="w-full">
+              <Button color="success" className="w-full">
                 <div className="flex items-center gap-2">
                   <HiCog className="h-4 w-4" />
                   <span>Gestionar</span>
@@ -79,7 +79,7 @@ export function CourseCard({
         ) : course.is_enrolled ? (
           // Usuario inscrito: solo botón "Ver contenido" ocupando todo el espacio
           <Link to={`/courses/${course.id}`} className="w-full">
-            <Button color="blue" className="w-full">
+            <Button color="success" className="w-full">
               <div className="flex items-center justify-center gap-2">
                 <HiBookOpen className="h-5 w-5" />
                 <span>Ver contenido</span>
@@ -97,7 +97,7 @@ export function CourseCard({
 
             {onEnroll ? (
               <Button
-                color="green"
+                color="success"
                 onClick={() => onEnroll(course.id)}
                 disabled={enrolling}
                 className="flex-1"

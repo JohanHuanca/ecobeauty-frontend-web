@@ -58,10 +58,10 @@ export function LessonCard({
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+            <span className="bg-primary-100 text-primary-600 flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold">
               {lesson.lesson_order}
             </span>
-            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="text-xl font-bold tracking-tight text-gray-900">
               {lesson.title}
             </h5>
           </div>
@@ -69,12 +69,12 @@ export function LessonCard({
           {/* Indicadores de contenido */}
           <div className="mt-2 flex gap-2">
             {lesson.content_text && (
-              <span className="inline-flex items-center rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+              <span className="inline-flex items-center rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
                 📄 Texto
               </span>
             )}
             {lesson.video_url && (
-              <span className="inline-flex items-center rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300">
+              <span className="inline-flex items-center rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
                 🎥 Video
               </span>
             )}
@@ -82,7 +82,7 @@ export function LessonCard({
 
           {/* Preview del contenido de texto */}
           {lesson.content_text && (
-            <p className="mt-2 line-clamp-2 text-sm text-gray-700 dark:text-gray-400">
+            <p className="mt-2 line-clamp-2 text-sm text-gray-700">
               {lesson.content_text}
             </p>
           )}
@@ -107,7 +107,7 @@ export function LessonCard({
             {onEdit && (
               <Button
                 size="xs"
-                color="blue"
+                color="success"
                 onClick={(e) => {
                   e.stopPropagation();
                   onEdit(lesson);

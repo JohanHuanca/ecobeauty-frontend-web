@@ -46,33 +46,33 @@ export function MyCoursesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="flex items-center gap-3 text-4xl font-bold text-gray-900 dark:text-white">
-            <HiBookOpen className="h-10 w-10 text-blue-600" />
+          <h1 className="flex items-center gap-3 text-4xl font-bold text-gray-900">
+            <HiBookOpen className="text-primary-600 h-10 w-10" />
             <span>Mis Cursos</span>
           </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-lg text-gray-600">
             Cursos en los que estás inscrito
           </p>
         </div>
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-gray-800 dark:text-red-400">
+          <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800">
             {error}
           </div>
         )}
 
         {/* Grid de cursos */}
         {courses.length === 0 ? (
-          <div className="rounded-lg bg-white p-12 text-center dark:bg-gray-800">
-            <p className="text-xl text-gray-500 dark:text-gray-400">
+          <div className="rounded-lg bg-white p-12 text-center">
+            <p className="text-xl text-gray-500">
               Aún no estás inscrito en ningún curso.
             </p>
-            <p className="mt-2 text-gray-400 dark:text-gray-500">
+            <p className="mt-2 text-gray-400">
               ¡Explora nuestro catálogo y comienza a aprender!
             </p>
             <Button className="mt-6" onClick={() => navigate("/courses")}>

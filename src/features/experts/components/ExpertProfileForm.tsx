@@ -104,7 +104,7 @@ export function ExpertProfileForm({
           required
           disabled={isSubmitting}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Esta es tu carta de presentación. Sé auténtico y profesional.
         </p>
       </div>
@@ -145,13 +145,13 @@ export function ExpertProfileForm({
             {formData.specialties.map((specialty, index) => (
               <span
                 key={index}
-                className="inline-flex items-center gap-2 rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+                className="bg-primary-100 text-primary-800 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium"
               >
                 {specialty}
                 <button
                   type="button"
                   onClick={() => handleRemoveSpecialty(index)}
-                  className="hover:text-green-600"
+                  className="hover:text-primary-600"
                   disabled={isSubmitting}
                 >
                   ✕
@@ -178,7 +178,7 @@ export function ExpertProfileForm({
           required
           disabled={isSubmitting}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Incluye código de país. Los clientes te contactarán por este número.
         </p>
       </div>
@@ -204,14 +204,14 @@ export function ExpertProfileForm({
           required
           disabled={isSubmitting}
         />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           Define tu tarifa para consultorías o servicios personalizados
         </p>
       </div>
 
       {/* Mensaje de error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400">
+        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
           {error}
         </div>
       )}

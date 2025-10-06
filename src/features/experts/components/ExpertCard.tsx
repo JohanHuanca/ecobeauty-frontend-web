@@ -19,10 +19,10 @@ export function ExpertCard({ expert }: ExpertCardProps) {
             size="xl"
             rounded
           />
-          <h5 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">
+          <h5 className="mt-4 text-xl font-bold text-gray-900">
             {expert.profile?.full_name || "Usuario"}
           </h5>
-          <Badge color="purple" className="mt-2">
+          <Badge className="bg-secondary-100 text-secondary-800 mt-2">
             <div className="flex items-center gap-1">
               <HiSparkles className="h-3 w-3" />
               <span>Experto</span>
@@ -33,7 +33,7 @@ export function ExpertCard({ expert }: ExpertCardProps) {
         {/* Especialidades */}
         {expert.specialties && expert.specialties.length > 0 && (
           <div className="mt-4">
-            <p className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <p className="mb-2 text-sm font-semibold text-gray-700">
               Especialidades:
             </p>
             <div className="flex flex-wrap gap-2">
@@ -43,7 +43,9 @@ export function ExpertCard({ expert }: ExpertCardProps) {
                 </Badge>
               ))}
               {expert.specialties.length > 3 && (
-                <Badge color="gray">+{expert.specialties.length - 3}</Badge>
+                <Badge className="bg-gray-100 text-gray-800">
+                  +{expert.specialties.length - 3}
+                </Badge>
               )}
             </div>
           </div>
@@ -51,25 +53,23 @@ export function ExpertCard({ expert }: ExpertCardProps) {
 
         {/* Bio preview */}
         {expert.bio && (
-          <p className="mt-4 line-clamp-3 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-4 line-clamp-3 text-sm text-gray-600">
             {expert.bio}
           </p>
         )}
 
         {/* Tarifa */}
         {expert.hourly_rate !== null && expert.hourly_rate > 0 && (
-          <div className="mt-4 rounded-lg bg-blue-50 p-3 dark:bg-gray-700">
-            <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-              Tarifa por hora
-            </p>
-            <p className="text-center text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="bg-primary-50 mt-4 rounded-lg p-3">
+            <p className="text-center text-sm text-gray-600">Tarifa por hora</p>
+            <p className="text-primary-600 text-center text-2xl font-bold">
               ${expert.hourly_rate.toFixed(2)}
             </p>
           </div>
         )}
 
         {/* Call to action */}
-        <div className="mt-4 text-center text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+        <div className="text-primary-600 hover:text-primary-700 mt-4 text-center text-sm">
           Ver perfil completo →
         </div>
       </Card>

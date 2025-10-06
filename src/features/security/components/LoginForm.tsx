@@ -96,15 +96,19 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
           />
         </div>
 
-        <Button type="submit" disabled={loading} className="w-full">
+        <Button
+          type="submit"
+          disabled={loading}
+          className="bg-primary-600 hover:bg-primary-700 w-full"
+        >
           {loading ? "Iniciando sesión..." : "Iniciar sesión"}
         </Button>
       </form>
 
       <div className="my-4 flex items-center">
-        <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
-        <span className="px-4 text-sm text-gray-500 dark:text-gray-400">o</span>
-        <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+        <div className="flex-1 border-t border-gray-300"></div>
+        <span className="px-4 text-sm text-gray-500">o</span>
+        <div className="flex-1 border-t border-gray-300"></div>
       </div>
 
       <Button
@@ -118,12 +122,12 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
       </Button>
 
       {onSwitchToRegister && (
-        <div className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        <div className="mt-4 text-center text-sm text-gray-600">
           ¿No tienes una cuenta?{" "}
           <button
             type="button"
             onClick={onSwitchToRegister}
-            className="text-blue-600 hover:underline dark:text-blue-500"
+            className="text-primary-600 hover:underline"
           >
             Regístrate aquí
           </button>

@@ -15,12 +15,10 @@ export function AuthCallbackPage() {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <div className="text-center">
         <Spinner size="xl" />
-        <p className="mt-4 text-gray-600 dark:text-gray-400">
-          Completando inicio de sesión...
-        </p>
+        <p className="mt-4 text-gray-600">Completando inicio de sesión...</p>
       </div>
     </div>
   );

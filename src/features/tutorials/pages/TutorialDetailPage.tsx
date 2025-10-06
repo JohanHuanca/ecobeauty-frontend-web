@@ -79,10 +79,8 @@ export function TutorialDetailPage() {
   if (error || !tutorial) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8">
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
-          <p className="text-red-800 dark:text-red-200">
-            {error || "Tutorial no encontrado"}
-          </p>
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4">
+          <p className="text-red-800">{error || "Tutorial no encontrado"}</p>
         </div>
         <Link to="/tutorials">
           <Button color="gray">Volver a tutoriales</Button>
@@ -92,11 +90,11 @@ export function TutorialDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-4xl px-4 py-8">
         <Link
           to="/tutorials"
-          className="mb-6 inline-flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-500"
+          className="text-primary-600 hover:text-primary-700 mb-6 inline-flex items-center"
         >
           <svg
             className="mr-2 h-4 w-4"
@@ -114,7 +112,7 @@ export function TutorialDetailPage() {
           Volver a tutoriales
         </Link>
 
-        <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+        <div className="rounded-lg bg-white p-6 shadow-lg">
           <div className="mb-6 flex items-center gap-3">
             <Avatar
               img={tutorial.profiles?.avatar_url || undefined}
@@ -122,10 +120,10 @@ export function TutorialDetailPage() {
               size="md"
             />
             <div>
-              <p className="font-medium text-gray-900 dark:text-white">
+              <p className="font-medium text-gray-900">
                 {tutorial.profiles?.full_name || "Usuario"}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-500">
                 {new Date(tutorial.created_at).toLocaleDateString("es-ES", {
                   year: "numeric",
                   month: "long",
@@ -135,7 +133,7 @@ export function TutorialDetailPage() {
             </div>
           </div>
 
-          <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mb-4 text-3xl font-bold text-gray-900">
             {tutorial.title}
           </h1>
 
@@ -143,14 +141,14 @@ export function TutorialDetailPage() {
             <YouTubeEmbed url={tutorial.video_url} title={tutorial.title} />
           )}
 
-          <div className="prose dark:prose-invert max-w-none">
-            <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+          <div className="prose max-w-none">
+            <p className="whitespace-pre-wrap text-gray-700">
               {tutorial.description}
             </p>
           </div>
 
           {/* Botones de interacción */}
-          <div className="mt-6 flex items-center gap-4 border-t pt-6 dark:border-gray-600">
+          <div className="mt-6 flex items-center gap-4 border-t pt-6">
             <Button
               color={tutorial.user_has_liked ? "failure" : "gray"}
               onClick={handleLikeToggle}
@@ -163,7 +161,7 @@ export function TutorialDetailPage() {
               )}
               {tutorial.likes_count || 0} Me gusta
             </Button>
-            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-2 text-gray-600">
               <HiChatAlt className="h-5 w-5" />
               <span>{tutorial.comments_count || 0} comentarios</span>
             </div>
@@ -171,7 +169,7 @@ export function TutorialDetailPage() {
         </div>
 
         {/* Sección de comentarios */}
-        <div className="mt-8 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+        <div className="mt-8 rounded-lg bg-white p-6 shadow-lg">
           <TutorialComments tutorialId={tutorial.id} />
         </div>
       </div>

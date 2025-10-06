@@ -49,10 +49,8 @@ export function ExpertProfilePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="py-12 text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-green-500"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
-            Cargando perfil...
-          </p>
+          <div className="border-primary-500 mx-auto h-12 w-12 animate-spin rounded-full border-t-2 border-b-2"></div>
+          <p className="mt-4 text-gray-600">Cargando perfil...</p>
         </div>
       </div>
     );
@@ -61,13 +59,13 @@ export function ExpertProfilePage() {
   if (error || !expert) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <div className="rounded-lg bg-red-50 p-8 text-center dark:bg-gray-800">
-          <p className="text-red-800 dark:text-red-400">
+        <div className="rounded-lg bg-red-50 p-8 text-center">
+          <p className="text-red-800">
             {error || "No se encontró el perfil del experto"}
           </p>
           <Link
             to="/experts"
-            className="mt-4 inline-block text-green-600 hover:underline dark:text-green-400"
+            className="text-primary-600 mt-4 inline-block hover:underline"
           >
             ← Volver al directorio
           </Link>
@@ -77,14 +75,11 @@ export function ExpertProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="mb-6">
-          <Link
-            to="/experts"
-            className="text-green-600 hover:underline dark:text-green-400"
-          >
+          <Link to="/experts" className="text-primary-600 hover:underline">
             ← Volver al directorio
           </Link>
         </div>
@@ -101,10 +96,10 @@ export function ExpertProfilePage() {
                   rounded
                   className="mb-4"
                 />
-                <h2 className="mb-1 text-2xl font-bold text-gray-900 dark:text-white">
+                <h2 className="mb-1 text-2xl font-bold text-gray-900">
                   {expert.profile?.full_name}
                 </h2>
-                <Badge color="purple" className="mb-4">
+                <Badge className="bg-secondary-100 text-secondary-800 mb-4">
                   <div className="flex items-center gap-1">
                     <HiSparkles className="h-3 w-3" />
                     <span>Experto Certificado</span>
@@ -112,11 +107,9 @@ export function ExpertProfilePage() {
                 </Badge>
 
                 {/* Tarifa */}
-                <div className="mb-6 w-full rounded-lg bg-blue-50 p-4 text-center dark:bg-gray-700">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Tarifa por hora
-                  </p>
-                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="bg-primary-50 mb-6 w-full rounded-lg p-4 text-center">
+                  <p className="text-sm text-gray-600">Tarifa por hora</p>
+                  <p className="text-primary-600 text-2xl font-bold">
                     ${expert.hourly_rate}/hr
                   </p>
                 </div>
@@ -139,7 +132,7 @@ export function ExpertProfilePage() {
                   Contactar por WhatsApp
                 </Button>
 
-                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                <p className="mt-2 text-xs text-gray-500">
                   {expert.phone_number}
                 </p>
               </div>
@@ -151,7 +144,7 @@ export function ExpertProfilePage() {
             <Card>
               {/* Especialidades */}
               <div className="mb-6">
-                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="mb-3 text-xl font-semibold text-gray-900">
                   Especialidades
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -169,17 +162,17 @@ export function ExpertProfilePage() {
 
               {/* Biografía */}
               <div>
-                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="mb-3 text-xl font-semibold text-gray-900">
                   Sobre mí
                 </h3>
-                <div className="whitespace-pre-line text-gray-700 dark:text-gray-300">
+                <div className="whitespace-pre-line text-gray-700">
                   {expert.bio}
                 </div>
               </div>
 
               {/* Fecha de registro */}
-              <div className="mt-6 border-t pt-4 dark:border-gray-600">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="mt-6 border-t pt-4">
+                <p className="text-sm text-gray-500">
                   Miembro desde{" "}
                   {new Date(expert.created_at).toLocaleDateString("es-ES", {
                     year: "numeric",
