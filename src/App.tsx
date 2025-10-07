@@ -3,6 +3,7 @@ import { LoginPage } from "./features/security/pages/LoginPage";
 import { RegisterPage } from "./features/security/pages/RegisterPage";
 import { ProfilePage } from "./features/security/pages/ProfilePage";
 import { AuthCallbackPage } from "./features/security/pages/AuthCallbackPage";
+import { RoleSelectionPage } from "./features/security/pages/RoleSelectionPage";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import { ExpertRoute } from "./shared/components/ExpertRoute";
 import { HomePage } from "./features/home/pages/HomePage";
@@ -28,8 +29,8 @@ import { Footer } from "./shared/components/Footer";
 export default function App() {
   const location = useLocation();
 
-  // Solo AuthCallback no debe mostrar el Header y Footer
-  const hideHeaderFooterPaths = ["/auth/callback"];
+  // AuthCallback y RoleSelection no deben mostrar el Header y Footer
+  const hideHeaderFooterPaths = ["/auth/callback", "/role-selection"];
   const shouldShowHeaderFooter = !hideHeaderFooterPaths.includes(
     location.pathname,
   );
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
+        <Route path="/role-selection" element={<RoleSelectionPage />} />
 
         {/* Rutas de comunidad */}
         <Route path="/community" element={<CommunityFeedPage />} />

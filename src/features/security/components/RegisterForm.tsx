@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Label, TextInput, Alert } from "flowbite-react";
 import { HiMail, HiLockClosed, HiUser } from "react-icons/hi";
-import { supabase } from "../../../core/services/supabase";
+import { FcGoogle } from "react-icons/fc";
+import { supabase, signInWithGoogle } from "../../../core/services/supabase";
 
 interface RegisterFormProps {
   onSuccess?: () => void;
@@ -12,6 +14,7 @@ export function RegisterForm({
   onSuccess,
   onSwitchToLogin,
 }: RegisterFormProps) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -64,35 +67,96 @@ export function RegisterForm({
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-      options: {
-        data: {
-          full_name: formData.fullName,
-        },
-      },
-    });
+    try {
+      // Primero intentamos registrar al usuario
+      const { data: signUpData, error: signUpError } =
+        await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              full_name: formData.fullName,
+            },
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+          },
+        });
 
-    setLoading(false);
-
-    if (error) {
-      setError(error.message || "Error al registrar usuario");
-    } else {
-      setSuccess(true);
-      setFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-
-      if (onSuccess) {
-        setTimeout(() => {
-          onSuccess();
-        }, 2000);
+      if (signUpError) {
+        setError(signUpError.message || "Error al registrar usuario");
+        setLoading(false);
+        return;
       }
+
+      // Si el usuario fue creado pero requiere confirmación de email
+      if (signUpData.user && !signUpData.session) {
+        // Intentar hacer login automáticamente (solo funciona si la confirmación está desactivada)
+        const { data: signInData, error: signInError } =
+          await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password,
+          });
+
+        if (signInError) {
+          // Si falla el login, probablemente necesita confirmar email
+          setError(
+            "Registro exitoso. Por favor verifica tu email antes de continuar. " +
+              "Si no ves el correo, revisa tu carpeta de spam.",
+          );
+          setLoading(false);
+          return;
+        }
+
+        // Si el login fue exitoso
+        if (signInData.session) {
+          setSuccess(true);
+          setFormData({
+            fullName: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+
+          setTimeout(() => {
+            navigate("/role-selection");
+            if (onSuccess) {
+              onSuccess();
+            }
+          }, 1500);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Si se registró y ya tiene sesión (confirmación desactivada)
+      if (signUpData.user && signUpData.session) {
+        setSuccess(true);
+        setFormData({
+          fullName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+
+        setTimeout(() => {
+          navigate("/role-selection");
+          if (onSuccess) {
+            onSuccess();
+          }
+        }, 1500);
+      }
+    } catch (err) {
+      console.error("Error en registro:", err);
+      setError("Ocurrió un error inesperado. Por favor intenta nuevamente.");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleGoogleSignup = async () => {
+    setLoading(true);
+    setError(null);
+    await signInWithGoogle();
+    // Supabase redirigirá automáticamente a /auth/callback
   };
 
   return (
@@ -114,7 +178,7 @@ export function RegisterForm({
               ¡Registro exitoso!
             </span>{" "}
             <span className="text-primary-700">
-              Ahora puedes iniciar sesión.
+              Redirigiendo a selección de roles...
             </span>
           </Alert>
         )}
@@ -195,6 +259,21 @@ export function RegisterForm({
           {loading ? "Registrando..." : "Registrarse"}
         </Button>
       </form>
+
+      <div className="my-4 flex items-center">
+        <div className="flex-1 border-t border-gray-300"></div>
+        <span className="px-4 text-sm text-gray-500">o</span>
+        <div className="flex-1 border-t border-gray-300"></div>
+      </div>
+
+      <Button
+        onClick={handleGoogleSignup}
+        disabled={loading}
+        className="w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+      >
+        <FcGoogle className="mr-2 h-5 w-5" />
+        Registrarse con Google
+      </Button>
 
       {onSwitchToLogin && (
         <div className="mt-4 text-center text-sm text-gray-600">
