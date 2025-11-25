@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { HiX, HiPaperAirplane, HiSparkles, HiChatAlt2 } from "react-icons/hi";
+import { useSupabaseAuth } from "../../core/services/useSupabaseAuth";
 
 interface Message {
   id: string;
@@ -9,6 +10,7 @@ interface Message {
 }
 
 export function Chatbot() {
+  const { session, profile } = useSupabaseAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -31,6 +33,22 @@ export function Chatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Actualizar mensaje de bienvenida cuando cambia el usuario
+  useEffect(() => {
+    const welcomeMessage = profile?.full_name
+      ? `¡Hola ${profile.full_name}! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?`
+      : "¡Hola! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?";
+
+    setMessages([
+      {
+        id: "1",
+        text: welcomeMessage,
+        sender: "bot",
+        timestamp: new Date(),
+      },
+    ]);
+  }, [profile]);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -43,15 +61,21 @@ export function Chatbot() {
 
   const sendMessageToN8N = async (message: string): Promise<string> => {
     try {
+      // Obtener user_id si el usuario está autenticado
+      const userId = session?.user?.id || profile?.id || "anonymous";
+
       const response = await fetch(N8N_WEBHOOK_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          user_id: userId,
           message: message,
           timestamp: new Date().toISOString(),
-          sessionId: `session-${Date.now()}`,
+          // Información adicional opcional del usuario
+          user_name: profile?.full_name || null,
+          user_email: session?.user?.email || null,
         }),
       });
 
