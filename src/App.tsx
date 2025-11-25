@@ -25,11 +25,12 @@ import { ExpertProfilePage } from "./features/experts/pages/ExpertProfilePage";
 import { EditExpertProfilePage } from "./features/experts/pages/EditExpertProfilePage";
 import { Header } from "./shared/components/Header";
 import { Footer } from "./shared/components/Footer";
+import { Chatbot } from "./shared/components/Chatbot";
 
 export default function App() {
   const location = useLocation();
 
-  // AuthCallback y RoleSelection no deben mostrar el Header y Footer
+  // AuthCallback y RoleSelection no deben mostrar el Header, Footer y Chatbot
   const hideHeaderFooterPaths = ["/auth/callback", "/role-selection"];
   const shouldShowHeaderFooter = !hideHeaderFooterPaths.includes(
     location.pathname,
@@ -144,6 +145,9 @@ export default function App() {
       </Routes>
 
       {shouldShowHeaderFooter && <Footer />}
+      
+      {/* Chatbot - visible en todas las páginas excepto auth/callback y role-selection */}
+      {shouldShowHeaderFooter && <Chatbot />}
     </>
   );
 }
