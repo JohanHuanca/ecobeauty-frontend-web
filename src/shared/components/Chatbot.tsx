@@ -25,7 +25,7 @@ export function Chatbot() {
 
   // URL de tu webhook de N8N - reemplaza con tu URL real
   const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || 
-    "https://tu-instancia-n8n.app/webhook/chatbot";
+    "https://accesogpt.app.n8n.cloud/webhook/1ff189de-a622-4f18-8fcd-5a31bdb3562d";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
