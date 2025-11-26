@@ -1,53 +1,32 @@
 import { useState, useRef, useEffect } from "react";
 import { HiX, HiPaperAirplane, HiSparkles, HiChatAlt2 } from "react-icons/hi";
 import { useSupabaseAuth } from "../../core/services/useSupabaseAuth";
+import { supabase } from "../../core/services/supabase";
 
 interface Message {
   id: string;
   text: string;
-  sender: "user" | "bot";
+  sender: "user" | "agent";
   timestamp: Date;
 }
 
 export function Chatbot() {
   const { session, profile } = useSupabaseAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "¡Hola! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?",
-      sender: "bot",
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // URL de tu webhook de N8N - reemplaza con tu URL real
+  // URL de N8N con workaround CORS
   const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || 
     "https://accesogpt.app.n8n.cloud/webhook/1ff189de-a622-4f18-8fcd-5a31bdb3562d";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
-  // Actualizar mensaje de bienvenida cuando cambia el usuario
-  useEffect(() => {
-    const welcomeMessage = profile?.full_name
-      ? `¡Hola ${profile.full_name}! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?`
-      : "¡Hola! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?";
-
-    setMessages([
-      {
-        id: "1",
-        text: welcomeMessage,
-        sender: "bot",
-        timestamp: new Date(),
-      },
-    ]);
-  }, [profile]);
 
   useEffect(() => {
     scrollToBottom();
@@ -59,12 +38,89 @@ export function Chatbot() {
     }
   }, [isOpen]);
 
+  // Cargar historial de chat cuando se abre el chatbot
+  useEffect(() => {
+    if (isOpen && session?.user?.id && messages.length === 0) {
+      loadChatHistory();
+    }
+  }, [isOpen, session?.user?.id]);
+
+  const loadChatHistory = async () => {
+    if (!session?.user?.id) return;
+
+    try {
+      setIsLoadingHistory(true);
+
+      const { data, error } = await supabase
+        .from("chats")
+        .select("*")
+        .eq("user_id", session.user.id)
+        .order("created_at", { ascending: true });
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        const historyMessages: Message[] = data.map((chat) => ({
+          id: chat.id.toString(),
+          text: chat.message,
+          sender: chat.sender as "user" | "agent",
+          timestamp: new Date(chat.created_at),
+        }));
+        setMessages(historyMessages);
+      } else {
+        // Si no hay historial, mostrar mensaje de bienvenida
+        const welcomeMessage: Message = {
+          id: "welcome",
+          text: profile?.full_name
+            ? `¡Hola ${profile.full_name}! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?`
+            : "¡Hola! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?",
+          sender: "agent",
+          timestamp: new Date(),
+        };
+        setMessages([welcomeMessage]);
+      }
+    } catch (error) {
+      console.error("Error al cargar historial:", error);
+      // Mostrar mensaje de bienvenida si hay error
+      const welcomeMessage: Message = {
+        id: "welcome",
+        text: "¡Hola! 👋 Soy tu asistente virtual de EcoBeauty. ¿En qué puedo ayudarte hoy?",
+        sender: "agent",
+        timestamp: new Date(),
+      };
+      setMessages([welcomeMessage]);
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  };
+
+  const saveChatMessage = async (message: string, sender: "user" | "agent") => {
+    if (!session?.user?.id) return;
+
+    try {
+      const { error } = await supabase.from("chats").insert({
+        user_id: session.user.id,
+        message: message,
+        sender: sender,
+      });
+
+      if (error) {
+        console.error("Error al guardar mensaje:", error);
+      }
+    } catch (error) {
+      console.error("Error al guardar mensaje:", error);
+    }
+  };
+
   const sendMessageToN8N = async (message: string): Promise<string> => {
     try {
-      // Obtener user_id si el usuario está autenticado
-      const userId = session?.user?.id || profile?.id || "anonymous";
+      const userId = session?.user?.id || "anonymous";
+      const useCorsProxy = import.meta.env.VITE_USE_CORS_PROXY === "true";
+      const finalUrl = useCorsProxy 
+        ? `https://corsproxy.io/?${encodeURIComponent(N8N_WEBHOOK_URL)}`
+        : N8N_WEBHOOK_URL;
 
-      const response = await fetch(N8N_WEBHOOK_URL, {
+      const response = await fetch(finalUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +129,6 @@ export function Chatbot() {
           user_id: userId,
           message: message,
           timestamp: new Date().toISOString(),
-          // Información adicional opcional del usuario
           user_name: profile?.full_name || null,
           user_email: session?.user?.email || null,
         }),
@@ -106,6 +161,10 @@ export function Chatbot() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    
+    // Guardar mensaje del usuario en Supabase
+    await saveChatMessage(userMessage.text, "user");
+    
     setInputValue("");
     setIsTyping(true);
 
@@ -115,11 +174,15 @@ export function Chatbot() {
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: botResponse,
-        sender: "bot",
+        sender: "agent",
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, botMessage]);
+      
+      // Guardar respuesta del bot en Supabase
+      await saveChatMessage(botMessage.text, "agent");
+      
       setIsTyping(false);
     }, 1000);
   };
@@ -142,6 +205,11 @@ export function Chatbot() {
     setInputValue(action);
     inputRef.current?.focus();
   };
+
+  // No mostrar el chatbot si el usuario no está autenticado
+  if (!session) {
+    return null;
+  }
 
   return (
     <>
@@ -170,7 +238,9 @@ export function Chatbot() {
               </div>
               <div>
                 <h3 className="font-semibold">EcoBeauty Assistant</h3>
-                <p className="text-xs text-emerald-100">Siempre en línea</p>
+                <p className="text-xs text-emerald-100">
+                  {profile?.full_name || "Usuario"}
+                </p>
               </div>
             </div>
             <button
@@ -184,64 +254,73 @@ export function Chatbot() {
 
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50 to-white p-4">
-            <div className="space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${
-                    message.sender === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
+            {isLoadingHistory ? (
+              <div className="flex h-full items-center justify-center">
+                <div className="text-center">
+                  <div className="mx-auto mb-2 h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
+                  <p className="text-sm text-gray-600">Cargando historial...</p>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {messages.map((message) => (
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                      message.sender === "user"
-                        ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white"
-                        : "bg-white text-gray-800 shadow-md"
+                    key={message.id}
+                    className={`flex ${
+                      message.sender === "user" ? "justify-end" : "justify-start"
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-                    <p
-                      className={`mt-1 text-xs ${
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                         message.sender === "user"
-                          ? "text-emerald-100"
-                          : "text-gray-400"
+                          ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white"
+                          : "bg-white text-gray-800 shadow-md"
                       }`}
                     >
-                      {message.timestamp.toLocaleTimeString("es-ES", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              ))}
-
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="max-w-[80%] rounded-2xl bg-white px-4 py-3 shadow-md">
-                    <div className="flex gap-1">
-                      <div
-                        className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
-                        style={{ animationDelay: "0ms" }}
-                      ></div>
-                      <div
-                        className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
-                        style={{ animationDelay: "150ms" }}
-                      ></div>
-                      <div
-                        className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
-                        style={{ animationDelay: "300ms" }}
-                      ></div>
+                      <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                      <p
+                        className={`mt-1 text-xs ${
+                          message.sender === "user"
+                            ? "text-emerald-100"
+                            : "text-gray-400"
+                        }`}
+                      >
+                        {message.timestamp.toLocaleTimeString("es-ES", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
                     </div>
                   </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="max-w-[80%] rounded-2xl bg-white px-4 py-3 shadow-md">
+                      <div className="flex gap-1">
+                        <div
+                          className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
+                          style={{ animationDelay: "0ms" }}
+                        ></div>
+                        <div
+                          className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
+                          style={{ animationDelay: "150ms" }}
+                        ></div>
+                        <div
+                          className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
+                          style={{ animationDelay: "300ms" }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
           </div>
 
-          {/* Quick Actions */}
-          {messages.length <= 1 && (
+          {/* Quick Actions - solo mostrar si no hay historial */}
+          {messages.length <= 1 && !isLoadingHistory && (
             <div className="border-t border-gray-200 p-3">
               <p className="mb-2 text-xs font-semibold text-gray-600">
                 Acciones rápidas:
