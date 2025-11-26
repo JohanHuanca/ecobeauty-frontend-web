@@ -121,7 +121,7 @@ export function Chatbot() {
         : N8N_WEBHOOK_URL;
 
       const response = await fetch(finalUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
