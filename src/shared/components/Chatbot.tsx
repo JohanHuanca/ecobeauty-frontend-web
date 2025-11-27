@@ -97,19 +97,6 @@ export function Chatbot() {
   const saveChatMessage = async (message: string, sender: "user" | "agent") => {
     if (!session?.user?.id) return;
 
-    try {
-      const { error } = await supabase.from("chats").insert({
-        user_id: session.user.id,
-        message: message,
-        sender: sender,
-      });
-
-      if (error) {
-        console.error("Error al guardar mensaje:", error);
-      }
-    } catch (error) {
-      console.error("Error al guardar mensaje:", error);
-    }
   };
 
   const sendMessageToN8N = async (message: string): Promise<string> => {
