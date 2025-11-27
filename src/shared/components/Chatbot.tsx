@@ -94,11 +94,6 @@ export function Chatbot() {
     }
   };
 
-  const saveChatMessage = async (message: string, sender: "user" | "agent") => {
-    if (!session?.user?.id) return;
-
-  };
-
   const sendMessageToN8N = async (message: string): Promise<string> => {
     try {
       const userId = session?.user?.id || "anonymous";
