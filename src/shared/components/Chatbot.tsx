@@ -149,9 +149,6 @@ export function Chatbot() {
 
     setMessages((prev) => [...prev, userMessage]);
     
-    // Guardar mensaje del usuario en Supabase
-    await saveChatMessage(userMessage.text, "user");
-    
     setInputValue("");
     setIsTyping(true);
 
@@ -166,9 +163,6 @@ export function Chatbot() {
       };
 
       setMessages((prev) => [...prev, botMessage]);
-      
-      // Guardar respuesta del bot en Supabase
-      await saveChatMessage(botMessage.text, "agent");
       
       setIsTyping(false);
     }, 1000);
