@@ -3,8 +3,8 @@ import { LoginPage } from "./features/security/pages/LoginPage";
 import { RegisterPage } from "./features/security/pages/RegisterPage";
 import { ProfilePage } from "./features/security/pages/ProfilePage";
 import { AuthCallbackPage } from "./features/security/pages/AuthCallbackPage";
-import { RoleSelectionPage } from "./features/security/pages/RoleSelectionPage";
-import { ProtectedRoute } from "./shared/components/ProtectedRoute";
+import { OnboardingPage } from "./features/security/pages/OnboardingPage";
+import { UserRoute } from "./shared/components/UserRoute";
 import { ExpertRoute } from "./shared/components/ExpertRoute";
 import { HomePage } from "./features/home/pages/HomePage";
 import { TutorialsListPage } from "./features/tutorials/pages/TutorialsListPage";
@@ -30,8 +30,8 @@ import { Chatbot } from "./shared/components/Chatbot";
 export default function App() {
   const location = useLocation();
 
-  // AuthCallback y RoleSelection no deben mostrar el Header, Footer y Chatbot
-  const hideHeaderFooterPaths = ["/auth/callback", "/role-selection"];
+  // AuthCallback y Onboarding no deben mostrar el Header, Footer y Chatbot
+  const hideHeaderFooterPaths = ["/auth/callback", "/onboarding"];
   const shouldShowHeaderFooter = !hideHeaderFooterPaths.includes(
     location.pathname,
   );
@@ -48,7 +48,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
-        <Route path="/role-selection" element={<RoleSelectionPage />} />
+        <Route path="/onboarding" element={<OnboardingPage />} />
 
         {/* Rutas de comunidad */}
         <Route path="/community" element={<CommunityFeedPage />} />
@@ -56,9 +56,9 @@ export default function App() {
         <Route
           path="/community/create"
           element={
-            <ProtectedRoute>
+            <UserRoute>
               <CreatePostPage />
-            </ProtectedRoute>
+            </UserRoute>
           }
         />
 
@@ -88,9 +88,9 @@ export default function App() {
         <Route
           path="/my-courses"
           element={
-            <ProtectedRoute>
+            <UserRoute>
               <MyCoursesPage />
-            </ProtectedRoute>
+            </UserRoute>
           }
         />
         <Route
@@ -134,9 +134,9 @@ export default function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <UserRoute>
               <ProfilePage />
-            </ProtectedRoute>
+            </UserRoute>
           }
         />
 
@@ -145,7 +145,7 @@ export default function App() {
       </Routes>
 
       {shouldShowHeaderFooter && <Footer />}
-      
+
       {/* Chatbot - visible en todas las páginas excepto auth/callback y role-selection */}
       {shouldShowHeaderFooter && <Chatbot />}
     </>

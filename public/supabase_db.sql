@@ -2,6 +2,19 @@
 -- ## 📜 ÉPICA 0: AUTENTICACIÓN Y PERFILES (BASE)
 -- ##############################################################
 
+-- Tabla para almacenar la información recolectada del formulario N8N, vinculada a profiles.
+CREATE TABLE public.profile_metrics (
+  profile_id UUID PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE,
+  experience_level TEXT NOT NULL,
+  age INT NOT NULL CHECK (age >= 18 AND age <= 100),
+  gender TEXT NOT NULL,
+  main_goals TEXT NOT NULL CHECK (char_length(main_goals) <= 200),
+  main_challenges TEXT NOT NULL CHECK (char_length(main_challenges) <= 200),
+  info_habits TEXT[] NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+COMMENT ON TABLE public.profile_metrics IS 'Métricas y KPIs recolectados del formulario N8N, vinculados a cada perfil.';
+
 -- Tabla para perfiles extendidos, vinculada a los usuarios de Supabase Auth.
 CREATE TABLE public.profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -33,11 +46,9 @@ INSERT INTO public.roles (name, description) VALUES
 ('expert', 'Usuario experto que puede crear cursos y ofrecer servicios.'),
 ('novice', 'Usuario principiante que consume contenido y participa en la comunidad.');
 
--- Función automática para crear un perfil y asignar rol de 'novice' a nuevos usuarios.
+-- Función automática para crear un perfil a nuevos usuarios.
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
-DECLARE
-  v_default_role_id BIGINT;
 BEGIN
   -- Crear el perfil del usuario
   INSERT INTO public.profiles (id, full_name, avatar_url)
@@ -46,15 +57,6 @@ BEGIN
     new.raw_user_meta_data->>'full_name',
     new.raw_user_meta_data->>'avatar_url'
   );
-
-  -- Obtener el ID del rol por defecto 'novice'
-  SELECT id INTO v_default_role_id FROM public.roles WHERE name = 'novice';
-
-  -- Asignar el rol por defecto si existe
-  IF v_default_role_id IS NOT NULL THEN
-    INSERT INTO public.user_roles (profile_id, role_id)
-    VALUES (new.id, v_default_role_id);
-  END IF;
   
   RETURN new;
 END;
@@ -199,3 +201,58 @@ CREATE INDEX ON public.post_comments (profile_id);
 CREATE INDEX ON public.courses (expert_profile_id);
 CREATE INDEX ON public.course_lessons (course_id);
 CREATE INDEX ON public.course_enrollments (course_id);
+
+
+-- ##############################################################
+-- ## 🔧 FUNCIONES RPC PARA N8N
+-- ##############################################################
+
+-- RPC function to assign roles by user email (used by N8N).
+-- Best practices: prefix name with rpc_, param names prefixed with p_, and use SECURITY DEFINER.
+
+CREATE OR REPLACE FUNCTION public.rpc_assign_role_by_email(
+  p_user_email TEXT,
+  p_role_name TEXT
+)
+RETURNS JSON AS $$
+DECLARE
+  v_profile_id UUID;
+  v_role_id BIGINT;
+  v_novice_id BIGINT;
+BEGIN
+  -- Validar datos
+  IF p_user_email IS NULL OR p_role_name IS NULL THEN
+    RETURN json_build_object('success', false, 'error', 'Email y rol requeridos');
+  END IF;
+
+  -- Buscar el perfil
+  SELECT id INTO v_profile_id FROM public.profiles WHERE id IN (SELECT id FROM auth.users WHERE email = p_user_email);
+  IF v_profile_id IS NULL THEN
+    RETURN json_build_object('success', false, 'error', 'Usuario no encontrado');
+  END IF;
+
+  -- Buscar el rol principal
+  SELECT id INTO v_role_id FROM public.roles WHERE name = lower(p_role_name);
+  IF v_role_id IS NULL THEN
+    RETURN json_build_object('success', false, 'error', 'Rol no encontrado');
+  END IF;
+
+  -- Asignar rol principal si no lo tiene
+  IF NOT EXISTS (SELECT 1 FROM public.user_roles WHERE profile_id = v_profile_id AND role_id = v_role_id) THEN
+    INSERT INTO public.user_roles (profile_id, role_id) VALUES (v_profile_id, v_role_id);
+  END IF;
+
+  -- Si es experto, asignar también novato
+  IF lower(p_role_name) = 'expert' THEN
+    SELECT id INTO v_novice_id FROM public.roles WHERE name = 'novice';
+    IF v_novice_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM public.user_roles WHERE profile_id = v_profile_id AND role_id = v_novice_id) THEN
+      INSERT INTO public.user_roles (profile_id, role_id) VALUES (v_profile_id, v_novice_id);
+    END IF;
+    RETURN json_build_object('success', true, 'user_id', v_profile_id, 'assigned_roles', ARRAY['expert','novice']);
+  END IF;
+
+  RETURN json_build_object('success', true, 'user_id', v_profile_id, 'assigned_roles', ARRAY[lower(p_role_name)]);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+COMMENT ON FUNCTION public.rpc_assign_role_by_email(TEXT, TEXT) IS 'RPC: Assign role(s) to a user by their email. Assigning "expert" will also assign the "novice" role. Used by automation workflows like N8N.';
