@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button, Label, TextInput, Alert } from "flowbite-react";
 import { HiMail, HiLockClosed } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
-import { supabase, signInWithGoogle } from "../../../core/services/supabase";
+import { supabase } from "../../../core/services/supabase";
+import { authService } from "../../security/services/authService";
 
 interface LoginFormProps {
   onSuccess?: () => void;
@@ -49,7 +50,7 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
   const handleGoogleLogin = async () => {
     setLoading(true);
     setError(null);
-    await signInWithGoogle();
+    await authService.signInWithGoogle();
     // Supabase redirigirá automáticamente
   };
 

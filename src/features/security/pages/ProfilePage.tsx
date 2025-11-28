@@ -12,7 +12,8 @@ import {
 } from "flowbite-react";
 import { HiUser, HiLogout, HiCamera, HiStar } from "react-icons/hi";
 import { useSupabaseAuth } from "../../../core/services/useSupabaseAuth";
-import { supabase, signOut } from "../../../core/services/supabase";
+import { supabase } from "../../../core/services/supabase";
+import { authService } from "../../security/services/authService";
 import { checkIfHasProfile } from "../../experts/services/expertsService";
 
 export function ProfilePage() {
@@ -170,7 +171,7 @@ export function ProfilePage() {
 
   const handleLogout = async () => {
     setLoading(true);
-    await signOut();
+    await authService.signOut();
     navigate("/login");
   };
 

@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { LoginPage } from "./features/security/pages/LoginPage";
 import { RegisterPage } from "./features/security/pages/RegisterPage";
 import { ProfilePage } from "./features/security/pages/ProfilePage";
-import { AuthCallbackPage } from "./features/security/pages/AuthCallbackPage";
+import AuthCallbackPage from "./features/security/pages/AuthCallbackPage";
 import { OnboardingPage } from "./features/security/pages/OnboardingPage";
 import { UserRoute } from "./shared/components/UserRoute";
 import { ExpertRoute } from "./shared/components/ExpertRoute";

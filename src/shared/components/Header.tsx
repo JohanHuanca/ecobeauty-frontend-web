@@ -10,7 +10,7 @@ import {
 } from "react-icons/hi";
 import { GiFlowerPot } from "react-icons/gi";
 import { useSupabaseAuth } from "../../core/services/useSupabaseAuth";
-import { signOut } from "../../core/services/supabase";
+import { authService } from "../../features/security/services/authService";
 
 export function Header() {
   const location = useLocation();
@@ -46,7 +46,7 @@ export function Header() {
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
-      await signOut();
+      await authService.signOut();
       navigate("/login");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);

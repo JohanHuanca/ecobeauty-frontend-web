@@ -1,252 +1,188 @@
-import { supabase } from '../../../core/services/supabase';
-import type { AuthError } from '@supabase/supabase-js';
 
-// Tipos para las respuestas del servicio
+import { supabase } from '../../../core/services/supabase';
+
 export interface AuthResponse {
     success: boolean;
-    error?: string;
+    message?: string;
+    error?: { message: string; code?: string };
 }
 
-// Tipos para los datos de registro
-export interface RegisterData {
-    email: string;
-    password: string;
-    fullName: string;
-}
-
-// Tipos para los datos de login
-export interface LoginData {
-    email: string;
-    password: string;
-}
-
-// Tipos para actualización de perfil
-export interface UpdateProfileData {
-    fullName?: string;
-    avatarUrl?: string;
-}
-
-/**
- * Servicio de autenticación que maneja todas las operaciones relacionadas
- * con registro, login, logout y gestión de perfiles
- */
-class AuthService {
-    /**
-     * Registra un nuevo usuario en el sistema
-     * @param data Datos del usuario (email, password, fullName)
-     * @returns Promesa con el resultado de la operación
-     */
-    async register(data: RegisterData): Promise<AuthResponse> {
+export const authService = {
+    async signUpWithEmail(email: string, password: string, fullName: string): Promise<AuthResponse> {
         try {
             const { error } = await supabase.auth.signUp({
-                email: data.email,
-                password: data.password,
+                email,
+                password,
                 options: {
-                    data: {
-                        full_name: data.fullName,
-                    },
+                    data: { full_name: fullName },
+                    emailRedirectTo: `${window.location.origin}/auth/callback`,
                 },
             });
-
             if (error) {
-                return {
-                    success: false,
-                    error: this.getErrorMessage(error),
-                };
+                return { success: false, error: { message: error.message, code: error.code } };
             }
-
-            return {
-                success: true,
-            };
+            return { success: true, message: 'Registro exitoso. Por favor verifica tu correo electrónico.' };
         } catch {
-            return {
-                success: false,
-                error: 'Error inesperado durante el registro',
-            };
+            return { success: false, error: { message: 'Error inesperado al registrarse' } };
         }
-    }
+    },
 
-    /**
-     * Inicia sesión con email y contraseña
-     * @param data Credenciales del usuario (email, password)
-     * @returns Promesa con el resultado de la operación
-     */
-    async login(data: LoginData): Promise<AuthResponse> {
+    async signInWithEmail(email: string, password: string): Promise<AuthResponse> {
         try {
-            const { error } = await supabase.auth.signInWithPassword({
-                email: data.email,
-                password: data.password,
-            });
-
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) {
-                return {
-                    success: false,
-                    error: this.getErrorMessage(error),
-                };
+                return { success: false, error: { message: error.message, code: error.code } };
             }
-
-            return {
-                success: true,
-            };
+            return { success: true, message: 'Inicio de sesión exitoso' };
         } catch {
-            return {
-                success: false,
-                error: 'Error inesperado durante el inicio de sesión',
-            };
+            return { success: false, error: { message: 'Error inesperado al iniciar sesión' } };
         }
-    }
+    },
 
-    /**
-     * Inicia sesión con Google OAuth
-     * @returns Promesa con el resultado de la operación
-     */
-    async loginWithGoogle(): Promise<AuthResponse> {
+    async signInWithGoogle(): Promise<AuthResponse> {
         try {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/`,
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                    queryParams: { access_type: 'offline', prompt: 'consent' },
                 },
             });
-
             if (error) {
-                return {
-                    success: false,
-                    error: this.getErrorMessage(error),
-                };
+                return { success: false, error: { message: error.message, code: error.code } };
             }
-
-            return {
-                success: true,
-            };
+            return { success: true, message: 'Redirigiendo a Google...' };
         } catch {
-            return {
-                success: false,
-                error: 'Error inesperado durante el inicio de sesión con Google',
-            };
+            return { success: false, error: { message: 'Error al iniciar sesión con Google' } };
         }
-    }
+    },
 
-    /**
-     * Cierra la sesión del usuario actual
-     * @returns Promesa con el resultado de la operación
-     */
-    async logout(): Promise<AuthResponse> {
+    async signOut(): Promise<AuthResponse> {
         try {
             const { error } = await supabase.auth.signOut();
-
             if (error) {
-                return {
-                    success: false,
-                    error: this.getErrorMessage(error),
-                };
+                return { success: false, error: { message: error.message, code: error.code } };
             }
-
-            return {
-                success: true,
-            };
+            return { success: true, message: 'Sesión cerrada exitosamente' };
         } catch {
-            return {
-                success: false,
-                error: 'Error inesperado durante el cierre de sesión',
-            };
+            return { success: false, error: { message: 'Error al cerrar sesión' } };
         }
-    }
+    },
 
-    /**
-     * Actualiza el perfil del usuario actual
-     * @param userId ID del usuario
-     * @param data Datos a actualizar (fullName, avatarUrl)
-     * @returns Promesa con el resultado de la operación
-     */
-    async updateProfile(userId: string, data: UpdateProfileData): Promise<AuthResponse> {
+    async resetPasswordForEmail(email: string): Promise<AuthResponse> {
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/reset-password`,
+            });
+            if (error) {
+                return { success: false, error: { message: error.message, code: error.code } };
+            }
+            return { success: true, message: 'Se ha enviado un enlace de recuperación a tu correo' };
+        } catch {
+            return { success: false, error: { message: 'Error al enviar el correo de recuperación' } };
+        }
+    },
+
+    async updatePassword(newPassword: string): Promise<AuthResponse> {
+        try {
+            const { error } = await supabase.auth.updateUser({ password: newPassword });
+            if (error) {
+                return { success: false, error: { message: error.message, code: error.code } };
+            }
+            return { success: true, message: 'Contraseña actualizada exitosamente' };
+        } catch {
+            return { success: false, error: { message: 'Error al actualizar la contraseña' } };
+        }
+    },
+
+    async getCurrentUser() {
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+            return user;
+        } catch {
+            return null;
+        }
+    },
+
+    async getCurrentProfile() {
+        try {
+            const user = await this.getCurrentUser();
+            if (!user) return null;
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+            if (error) {
+                console.error('Error al obtener perfil:', error);
+                return null;
+            }
+            return data;
+        } catch {
+            return null;
+        }
+    },
+
+    async getUserRoles(userId: string) {
+        try {
+            const { data, error } = await supabase
+                .from('user_roles')
+                .select('*, roles(*)')
+                .eq('profile_id', userId);
+            if (error) {
+                console.error('Error al obtener roles:', error);
+                return [];
+            }
+            return data;
+        } catch {
+            return [];
+        }
+    },
+
+    async hasRole(userId: string, roleName: string): Promise<boolean> {
+        try {
+            const { data, error } = await supabase
+                .from('user_roles')
+                .select('roles(name)')
+                .eq('profile_id', userId)
+                .eq('roles.name', roleName)
+                .single();
+            return !error && data !== null;
+        } catch {
+            return false;
+        }
+    },
+
+    async updateProfile(userId: string, data: { fullName?: string; avatarUrl?: string }): Promise<AuthResponse> {
         try {
             const updateData: Record<string, string> = {};
-
-            if (data.fullName !== undefined) {
-                updateData.full_name = data.fullName;
-            }
-
-            if (data.avatarUrl !== undefined) {
-                updateData.avatar_url = data.avatarUrl;
-            }
-
-            const { error } = await supabase
-                .from('profiles')
-                .update(updateData)
-                .eq('id', userId);
-
+            if (data.fullName !== undefined) updateData.full_name = data.fullName;
+            if (data.avatarUrl !== undefined) updateData.avatar_url = data.avatarUrl;
+            const { error } = await supabase.from('profiles').update(updateData).eq('id', userId);
             if (error) {
-                return {
-                    success: false,
-                    error: this.getErrorMessage(error),
-                };
+                return { success: false, error: { message: error.message, code: error.code } };
             }
-
-            return {
-                success: true,
-            };
+            return { success: true, message: 'Perfil actualizado exitosamente' };
         } catch {
-            return {
-                success: false,
-                error: 'Error inesperado al actualizar el perfil',
-            };
+            return { success: false, error: { message: 'Error inesperado al actualizar el perfil' } };
         }
-    }
+    },
 
-    /**
-     * Sube una imagen de avatar al storage de Supabase
-     * @param userId ID del usuario
-     * @param file Archivo de imagen
-     * @returns Promesa con la URL pública de la imagen o null si hay error
-     */
     async uploadAvatar(userId: string, file: File): Promise<string | null> {
         try {
             const fileExt = file.name.split('.').pop();
             const fileName = `${userId}-${Date.now()}.${fileExt}`;
             const filePath = `avatars/${fileName}`;
-
-            const { error: uploadError } = await supabase.storage
-                .from('avatars')
-                .upload(filePath, file, {
-                    upsert: true,
-                });
-
+            const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file, { upsert: true });
             if (uploadError) {
                 console.error('Error al subir avatar:', uploadError);
                 return null;
             }
-
-            const { data } = supabase.storage
-                .from('avatars')
-                .getPublicUrl(filePath);
-
+            const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
             return data.publicUrl;
         } catch (error) {
             console.error('Error inesperado al subir avatar:', error);
             return null;
         }
-    }
-
-    /**
-     * Convierte errores de Supabase a mensajes amigables en español
-     * @param error Error de Supabase
-     * @returns Mensaje de error en español
-     */
-    private getErrorMessage(error: AuthError | { message: string }): string {
-        const errorMessages: Record<string, string> = {
-            'Invalid login credentials': 'Credenciales incorrectas',
-            'User already registered': 'El usuario ya está registrado',
-            'Email not confirmed': 'Por favor, confirma tu email antes de iniciar sesión',
-            'Password should be at least 6 characters': 'La contraseña debe tener al menos 6 caracteres',
-            'Unable to validate email address: invalid format': 'Formato de email inválido',
-            'Email rate limit exceeded': 'Demasiados intentos, por favor intenta más tarde',
-        };
-
-        const message = error.message || 'Error desconocido';
-        return errorMessages[message] || message;
-    }
-}
-
-// Exportar una instancia única del servicio
-export const authService = new AuthService();
+    },
+};
